@@ -1,20 +1,10 @@
 use crate::components::*;
 use bevy::{
-    app::{App, Startup, Update},
-    asset::{AssetMode, AssetPlugin, AssetServer},
-    core_pipeline::core_2d::Camera2dBundle,
-    ecs::{
-        component::Component,
-        query::With,
-        schedule::IntoSystemConfigs,
-        system::{Commands, Query, Res, Resource},
-    },
-    input::{keyboard::KeyCode, ButtonInput},
-    math::Vec2,
+    ecs::system::{Query, Res},
     prelude::*,
     time::Time,
-    transform::components::Transform,
 };
+
 pub fn animation_change_frame(
     time: Res<Time>,
     mut query: Query<(&mut Animation, &mut TextureAtlas)>,

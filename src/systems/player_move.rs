@@ -1,17 +1,9 @@
 use crate::components::*;
 use bevy::{
-    app::{App, Startup, Update},
-    asset::{AssetMode, AssetPlugin, AssetServer},
-    core_pipeline::core_2d::Camera2dBundle,
     ecs::{
-        component::Component,
         query::With,
-        schedule::IntoSystemConfigs,
-        system::{Commands, Query, Res, Resource},
+        system::{Query, Res},
     },
-    input::{keyboard::KeyCode, ButtonInput},
-    math::Vec2,
-    prelude::*,
     time::Time,
     transform::components::Transform,
 };
