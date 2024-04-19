@@ -1,4 +1,4 @@
-use crate::components::*;
+use crate::{components::*, helpers::create_frames};
 use bevy::{
     asset::AssetServer,
     ecs::system::{Commands, Res},
@@ -23,16 +23,6 @@ pub fn startup_add_player(
         },
         ..default()
     };
-
-    fn create_frames(from: usize, to: usize, duration: f32) -> Vec<Frame> {
-        let mut frames = Vec::new();
-
-        for i in from..=to {
-            frames.push(Frame { index: i, duration });
-        }
-
-        frames
-    }
 
     let idle_frames = create_frames(0, 2, 0.2);
 

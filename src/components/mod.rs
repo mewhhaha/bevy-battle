@@ -8,6 +8,9 @@ use bevy::{
 pub struct Player;
 
 #[derive(Default, Component)]
+pub struct VendingMachine;
+
+#[derive(Default, Component)]
 pub struct Speed(pub f32);
 
 #[derive(Default, Component)]
