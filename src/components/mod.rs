@@ -5,6 +5,12 @@ use bevy::{
 };
 
 #[derive(Default, Component)]
+pub struct Interactive(pub bool);
+
+#[derive(Default, Component)]
+pub struct RangeInteraction(pub f32);
+
+#[derive(Default, Component)]
 pub struct Player;
 
 #[derive(Default, Component)]

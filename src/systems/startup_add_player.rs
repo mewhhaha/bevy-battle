@@ -4,6 +4,7 @@ use bevy::{
     ecs::system::{Commands, Res},
     math::Vec2,
     prelude::*,
+    render::view::RenderLayers,
 };
 
 pub fn startup_add_player(
@@ -36,5 +37,12 @@ pub fn startup_add_player(
         sprite,
     );
 
-    commands.spawn((Player, animated_sprite, Speed(200.0), Velocity::default()));
+    commands.spawn((
+        Player,
+        animated_sprite,
+        Speed(200.0),
+        Velocity::default(),
+        RangeInteraction(32.0),
+        RenderLayers::layer(0),
+    ));
 }
