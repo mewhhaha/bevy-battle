@@ -130,8 +130,10 @@ fn set_interactive_render_layer(
     let mut player_commands = commands.entity(player_entity);
 
     if interacting {
+        println!("Player is interacting");
         player_commands.insert(player_layers.with(LAYER_INTERACTIVE));
     } else {
+        println!("Player is not interacting");
         player_commands.insert(player_layers.without(LAYER_INTERACTIVE));
     }
 }

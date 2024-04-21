@@ -17,13 +17,13 @@ use bevy::{
         texture::Image,
         view::RenderLayers,
     },
-    sprite::MaterialMesh2dBundle,
+    sprite::{MaterialMesh2dBundle, SpriteBundle},
     transform::components::Transform,
     window::Window,
 };
 
 use crate::{
-    helpers::{LAYER_INTERACTIVE, LAYER_OUTLINE, LAYER_WORLD},
+    helpers::{LAYER_INTERACTIVE, LAYER_OUTLINE, LAYER_POST_PROCESS, LAYER_WORLD},
     materials::OutlineMaterial,
 };
 
@@ -41,29 +41,17 @@ pub fn startup_add_cameras(
         height: window.physical_height(),
         ..default()
     };
+    let mut outline_image = new_image(size);
+    outline_image.resize(size);
 
-    let mut image = Image {
-        texture_descriptor: TextureDescriptor {
-            label: None,
-            size,
-            dimension: TextureDimension::D2,
-            format: TextureFormat::Bgra8UnormSrgb,
-            mip_level_count: 1,
-            sample_count: 1,
-            usage: TextureUsages::TEXTURE_BINDING
-                | TextureUsages::COPY_DST
-                | TextureUsages::RENDER_ATTACHMENT,
-            view_formats: &[],
-        },
-        ..default()
-    };
+    let mut world_image = new_image(size);
+    world_image.resize(size);
 
-    image.resize(size);
-
-    let handle = images.add(image);
+    let outline_handle = images.add(outline_image);
+    let world_handle = images.add(world_image);
 
     let material = materials.add(OutlineMaterial {
-        texture: handle.clone(),
+        texture: outline_handle.clone(),
         color: Color::WHITE,
         thickness: 0.001,
     });
@@ -74,31 +62,45 @@ pub fn startup_add_cameras(
         }))
         .into();
 
-    commands.spawn(overlay_interactive(mesh, material));
-    commands.spawn(camera_interactive(handle.clone()));
-    commands.spawn(camera_world());
+    commands.spawn(camera_interactive(outline_handle.clone()));
+    commands.spawn(camera_world(world_handle.clone()));
+    commands.spawn(overlay_post_process(mesh, material));
+    commands.spawn(overlay_world(world_handle.clone()));
+    commands.spawn((
+        Camera2dBundle::default(),
+        RenderLayers::layer(LAYER_POST_PROCESS),
+    ));
 }
 
-fn overlay_interactive(mesh: Handle<Mesh>, material: Handle<OutlineMaterial>) -> impl Bundle {
+fn overlay_world(handle: Handle<Image>) -> impl Bundle {
     (
-        MaterialMesh2dBundle {
-            mesh: mesh.into(),
-            material,
-            transform: Transform {
-                translation: Vec3::new(0.0, 0.0, 0.0),
-                ..default()
-            },
+        SpriteBundle {
+            texture: handle.into(),
+            transform: Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
             ..default()
         },
-        RenderLayers::layer(LAYER_OUTLINE),
+        RenderLayers::layer(LAYER_POST_PROCESS),
     )
 }
 
-fn camera_world() -> impl Bundle {
+fn overlay_post_process(mesh: Handle<Mesh>, material: Handle<OutlineMaterial>) -> impl Bundle {
+    (
+        MaterialMesh2dBundle {
+            mesh: mesh.into(),
+            transform: Transform::from_translation(Vec3::new(0.0, 0.0, -1.0)),
+            material,
+            ..default()
+        },
+        RenderLayers::layer(LAYER_POST_PROCESS),
+    )
+}
+
+fn camera_world(handle: Handle<Image>) -> impl Bundle {
     (
         Camera2dBundle {
             camera: Camera {
                 order: 0,
+                target: RenderTarget::Image(handle),
                 clear_color: ClearColorConfig::Custom(Color::rgba_u8(0, 0, 0, 0)),
                 ..default()
             },
@@ -113,7 +115,7 @@ fn camera_interactive(handle: Handle<Image>) -> impl Bundle {
     (
         Camera2dBundle {
             camera: Camera {
-                order: 1,
+                order: -1,
                 target: RenderTarget::Image(handle),
                 clear_color: ClearColorConfig::Custom(Color::rgba_u8(0, 0, 0, 0)),
                 ..default()
@@ -123,4 +125,22 @@ fn camera_interactive(handle: Handle<Image>) -> impl Bundle {
         },
         RenderLayers::layer(LAYER_INTERACTIVE),
     )
+}
+
+fn new_image(size: Extent3d) -> Image {
+    Image {
+        texture_descriptor: TextureDescriptor {
+            label: None,
+            size,
+            dimension: TextureDimension::D2,
+            format: TextureFormat::Bgra8UnormSrgb,
+            mip_level_count: 1,
+            sample_count: 1,
+            usage: TextureUsages::TEXTURE_BINDING
+                | TextureUsages::COPY_DST
+                | TextureUsages::RENDER_ATTACHMENT,
+            view_formats: &[],
+        },
+        ..default()
+    }
 }
