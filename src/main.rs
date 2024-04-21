@@ -1,14 +1,15 @@
 use crate::components::*;
+use crate::helpers::LAYER_WORLD;
 use crate::systems::*;
 
 use bevy::render::view::RenderLayers;
 use bevy::sprite::Material2dPlugin;
-use bevy::text;
 use bevy::{
     app::{App, Startup, Update},
     asset::{AssetMode, AssetPlugin},
     prelude::*,
 };
+use helpers::LAYER_INTERACTIVE;
 use materials::OutlineMaterial;
 mod components;
 mod helpers;
@@ -55,7 +56,12 @@ fn startup_add_vending_machine(
             sprite,
         );
 
-        commands.spawn((VendingMachine, animated_sprite, Interactive(false)));
+        commands.spawn((
+            VendingMachine,
+            animated_sprite,
+            Interactive(false),
+            RenderLayers::layer(LAYER_WORLD),
+        ));
     }
 
     spawn_machine(
@@ -66,7 +72,7 @@ fn startup_add_vending_machine(
     );
     spawn_machine(
         &mut commands,
-        Vec2::new(16.0, 16.0),
+        Vec2::new(48.0, 16.0),
         texture,
         texture_atlas_layout,
     );
@@ -104,29 +110,29 @@ fn player_set_closest_interactive(
 fn set_interactive_render_layer(
     mut commands: Commands,
     player_query: Query<(Entity, &RenderLayers), With<Player>>,
-    query: Query<(Entity, Option<&RenderLayers>, &Interactive), Changed<Interactive>>,
+    query: Query<(Entity, &RenderLayers, &Interactive)>,
 ) {
-    let (player_entity, player_layers) = player_query.single();
-
-    let mut any_interactive = false;
     for (entity, render_layers, Interactive(interactive)) in query.iter() {
-        let layers = render_layers.map(|layers| *layers).unwrap_or_default();
-
-        println!("Setting interactive: {}", interactive,);
-        let mut interactive_commands = commands.entity(entity);
-        if *interactive {
-            any_interactive = true;
-            interactive_commands.insert(layers.with(2));
+        println!("Resetting interactivity {}", *interactive);
+        let updated_layers = if *interactive {
+            render_layers.with(LAYER_INTERACTIVE)
         } else {
-            interactive_commands.insert(layers.without(2));
-        }
+            render_layers.without(LAYER_INTERACTIVE)
+        };
+        commands.entity(entity).insert(updated_layers);
     }
 
+    let (player_entity, player_layers) = player_query.single();
+    let interacting = query
+        .iter()
+        .any(|(_, _, Interactive(interactive))| *interactive);
+
     let mut player_commands = commands.entity(player_entity);
-    if any_interactive {
-        player_commands.insert(player_layers.with(2));
+
+    if interacting {
+        player_commands.insert(player_layers.with(LAYER_INTERACTIVE));
     } else {
-        player_commands.insert(player_layers.without(2));
+        player_commands.insert(player_layers.without(LAYER_INTERACTIVE));
     }
 }
 
@@ -146,7 +152,7 @@ fn main() {
             (
                 startup_add_player,
                 startup_add_vending_machine,
-                startup_add_camera,
+                startup_add_cameras,
                 startup_add_keymap,
             ),
         )

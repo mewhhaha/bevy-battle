@@ -1,4 +1,7 @@
-use crate::{components::*, helpers::create_frames};
+use crate::{
+    components::*,
+    helpers::{create_frames, LAYER_WORLD},
+};
 use bevy::{
     asset::AssetServer,
     ecs::system::{Commands, Res},
@@ -43,6 +46,6 @@ pub fn startup_add_player(
         Speed(200.0),
         Velocity::default(),
         RangeInteraction(32.0),
-        RenderLayers::layer(0),
+        RenderLayers::layer(LAYER_WORLD),
     ));
 }

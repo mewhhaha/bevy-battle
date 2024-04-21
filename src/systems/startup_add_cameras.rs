@@ -1,7 +1,10 @@
 use bevy::{
     asset::{Assets, Handle},
     core_pipeline::core_2d::Camera2dBundle,
-    ecs::system::{Commands, Query, ResMut},
+    ecs::{
+        bundle::Bundle,
+        system::{Commands, Query, ResMut},
+    },
     math::{primitives::Rectangle, Vec2, Vec3},
     prelude::default,
     render::{
@@ -19,9 +22,12 @@ use bevy::{
     window::Window,
 };
 
-use crate::materials::OutlineMaterial;
+use crate::{
+    helpers::{LAYER_INTERACTIVE, LAYER_OUTLINE, LAYER_WORLD},
+    materials::OutlineMaterial,
+};
 
-pub fn startup_add_camera(
+pub fn startup_add_cameras(
     mut commands: Commands,
     windows: Query<&Window>,
     mut images: ResMut<Assets<Image>>,
@@ -68,32 +74,46 @@ pub fn startup_add_camera(
         }))
         .into();
 
-    commands.spawn(camera_interactive(handle.clone()));
     commands.spawn(overlay_interactive(mesh, material));
-
-    commands.spawn((Camera2dBundle::default(), RenderLayers::layer(0)));
+    commands.spawn(camera_interactive(handle.clone()));
+    commands.spawn(camera_world());
 }
 
-fn overlay_interactive(
-    mesh: Handle<Mesh>,
-    material: Handle<OutlineMaterial>,
-) -> (MaterialMesh2dBundle<OutlineMaterial>,) {
-    (MaterialMesh2dBundle {
-        mesh: mesh.into(),
-        material,
-        transform: Transform {
-            translation: Vec3::new(0.0, 0.0, 500.0),
+fn overlay_interactive(mesh: Handle<Mesh>, material: Handle<OutlineMaterial>) -> impl Bundle {
+    (
+        MaterialMesh2dBundle {
+            mesh: mesh.into(),
+            material,
+            transform: Transform {
+                translation: Vec3::new(0.0, 0.0, 0.0),
+                ..default()
+            },
             ..default()
         },
-        ..default()
-    },)
+        RenderLayers::layer(LAYER_OUTLINE),
+    )
 }
 
-fn camera_interactive(handle: Handle<Image>) -> (Camera2dBundle, RenderLayers) {
+fn camera_world() -> impl Bundle {
     (
         Camera2dBundle {
             camera: Camera {
                 order: 0,
+                clear_color: ClearColorConfig::Custom(Color::rgba_u8(0, 0, 0, 0)),
+                ..default()
+            },
+
+            ..default()
+        },
+        RenderLayers::from_layers(&[LAYER_WORLD, LAYER_OUTLINE]),
+    )
+}
+
+fn camera_interactive(handle: Handle<Image>) -> impl Bundle {
+    (
+        Camera2dBundle {
+            camera: Camera {
+                order: 1,
                 target: RenderTarget::Image(handle),
                 clear_color: ClearColorConfig::Custom(Color::rgba_u8(0, 0, 0, 0)),
                 ..default()
@@ -101,6 +121,6 @@ fn camera_interactive(handle: Handle<Image>) -> (Camera2dBundle, RenderLayers) {
 
             ..default()
         },
-        RenderLayers::layer(2),
+        RenderLayers::layer(LAYER_INTERACTIVE),
     )
 }
