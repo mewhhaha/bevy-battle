@@ -23,7 +23,7 @@ use bevy::{
 };
 
 use crate::{
-    helpers::{LAYER_INTERACTIVE, LAYER_OUTLINE, LAYER_POST_PROCESS, LAYER_WORLD},
+    helpers::{LAYER_INTERACTIVE, LAYER_POST_PROCESS, LAYER_WORLD},
     materials::OutlineMaterial,
 };
 
@@ -62,14 +62,16 @@ pub fn startup_add_cameras(
         }))
         .into();
 
-    commands.spawn(camera_interactive(outline_handle.clone()));
-    commands.spawn(camera_world(world_handle.clone()));
-    commands.spawn(overlay_post_process(mesh, material));
     commands.spawn(overlay_world(world_handle.clone()));
+    commands.spawn(overlay_post_process(mesh, material));
+
     commands.spawn((
         Camera2dBundle::default(),
         RenderLayers::layer(LAYER_POST_PROCESS),
     ));
+
+    commands.spawn(camera_interactive(outline_handle.clone()));
+    commands.spawn(camera_world(world_handle.clone()));
 }
 
 fn overlay_world(handle: Handle<Image>) -> impl Bundle {
@@ -99,15 +101,13 @@ fn camera_world(handle: Handle<Image>) -> impl Bundle {
     (
         Camera2dBundle {
             camera: Camera {
-                order: 0,
                 target: RenderTarget::Image(handle),
                 clear_color: ClearColorConfig::Custom(Color::rgba_u8(0, 0, 0, 0)),
                 ..default()
             },
-
             ..default()
         },
-        RenderLayers::from_layers(&[LAYER_WORLD, LAYER_OUTLINE]),
+        RenderLayers::layer(LAYER_WORLD),
     )
 }
 
@@ -115,7 +115,6 @@ fn camera_interactive(handle: Handle<Image>) -> impl Bundle {
     (
         Camera2dBundle {
             camera: Camera {
-                order: -1,
                 target: RenderTarget::Image(handle),
                 clear_color: ClearColorConfig::Custom(Color::rgba_u8(0, 0, 0, 0)),
                 ..default()

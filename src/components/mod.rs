@@ -30,10 +30,22 @@ pub struct Frame {
 
 #[derive(Default, Component)]
 pub struct Animation {
-    pub name: &'static str,
-    pub time: f32,
-    pub current: usize,
+    /** Value that goes from 0 to 1 where 0 is start and 1 is finished */
+    pub t: f32,
+    pub looping: bool,
+    pub frame_index: usize,
     pub frames: Vec<Frame>,
+}
+
+impl Animation {
+    pub fn new(frames: Vec<Frame>) -> Self {
+        Self {
+            t: 0.0,
+            looping: true,
+            frame_index: 0,
+            frames,
+        }
+    }
 }
 
 #[derive(Resource)]

@@ -15,7 +15,7 @@ pub fn startup_add_player(
     asset_server: Res<AssetServer>,
     mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
 ) {
-    let texture = asset_server.load::<Image>("spritesheet.png");
+    let texture = asset_server.load::<Image>("textures/spritesheet.png");
     let layout = TextureAtlasLayout::from_grid(Vec2::new(32.0, 32.0), 8, 7, None, None);
     let texture_atlas_layout = texture_atlas_layouts.add(layout);
 
@@ -30,19 +30,10 @@ pub fn startup_add_player(
 
     let idle_frames = create_frames(0, 2, 0.2);
 
-    let animated_sprite = (
-        Animation {
-            name: "idle",
-            time: 0.0,
-            current: 0,
-            frames: idle_frames,
-        },
-        sprite,
-    );
-
     commands.spawn((
         Player,
-        animated_sprite,
+        Animation::new(idle_frames),
+        sprite,
         Speed(200.0),
         Velocity::default(),
         RangeInteraction(32.0),

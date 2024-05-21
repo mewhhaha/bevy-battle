@@ -21,7 +21,7 @@ fn startup_add_vending_machine(
     asset_server: Res<AssetServer>,
     mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
 ) {
-    let texture = asset_server.load::<Image>("spritesheet.png");
+    let texture = asset_server.load::<Image>("textures/spritesheet.png");
     let layout = TextureAtlasLayout::from_grid(Vec2::new(32.0, 32.0), 8, 7, None, None);
     let texture_atlas_layout = texture_atlas_layouts.add(layout);
 
@@ -46,19 +46,10 @@ fn startup_add_vending_machine(
 
         let idle_frames = helpers::create_frames(20, 20, 0.2);
 
-        let animated_sprite = (
-            Animation {
-                name: "idle",
-                time: 0.0,
-                current: 0,
-                frames: idle_frames,
-            },
-            sprite,
-        );
-
         commands.spawn((
             VendingMachine,
-            animated_sprite,
+            Animation::new(idle_frames),
+            sprite,
             Interactive(false),
             RenderLayers::layer(LAYER_WORLD),
         ));
@@ -72,7 +63,7 @@ fn startup_add_vending_machine(
     );
     spawn_machine(
         &mut commands,
-        Vec2::new(48.0, 16.0),
+        Vec2::new(48.0, -100.0),
         texture,
         texture_atlas_layout,
     );
