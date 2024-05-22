@@ -17,7 +17,7 @@ use bevy::{
         texture::Image,
         view::RenderLayers,
     },
-    sprite::{MaterialMesh2dBundle, SpriteBundle},
+    sprite::MaterialMesh2dBundle,
     transform::components::Transform,
     window::Window,
 };
@@ -36,60 +36,51 @@ pub fn startup_add_cameras(
 ) {
     let window = windows.single();
 
-    let size = Extent3d {
-        width: window.physical_width(),
-        height: window.physical_height(),
-        ..default()
-    };
+    let size = size_window(window);
+
     let mut outline_image = new_image(size);
     outline_image.resize(size);
 
-    let mut world_image = new_image(size);
-    world_image.resize(size);
-
     let outline_handle = images.add(outline_image);
-    let world_handle = images.add(world_image);
 
-    let material = materials.add(OutlineMaterial {
-        texture: outline_handle.clone(),
-        color: Color::WHITE,
-        thickness: 0.001,
-    });
+    let material = materials.add(outline_material(outline_handle.clone()));
 
-    let mesh = meshes
-        .add(Mesh::from(Rectangle {
-            half_size: Vec2::new(size.width as f32, size.height as f32) / 2.0,
-        }))
-        .into();
+    let mesh = meshes.add(mesh_rectangle(size)).into();
 
-    commands.spawn(overlay_world(world_handle.clone()));
     commands.spawn(overlay_post_process(mesh, material));
 
-    commands.spawn((
-        Camera2dBundle::default(),
-        RenderLayers::layer(LAYER_POST_PROCESS),
-    ));
-
     commands.spawn(camera_interactive(outline_handle.clone()));
-    commands.spawn(camera_world(world_handle.clone()));
+    commands.spawn(camera_world(0));
+    commands.spawn(camera_post_process(1));
 }
 
-fn overlay_world(handle: Handle<Image>) -> impl Bundle {
-    (
-        SpriteBundle {
-            texture: handle.into(),
-            transform: Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
-            ..default()
-        },
-        RenderLayers::layer(LAYER_POST_PROCESS),
-    )
+fn size_window(window: &Window) -> Extent3d {
+    Extent3d {
+        width: window.physical_width(),
+        height: window.physical_height(),
+        ..default()
+    }
+}
+
+fn outline_material(handle: Handle<Image>) -> OutlineMaterial {
+    OutlineMaterial {
+        texture: handle,
+        color: Color::WHITE,
+        thickness: 0.001,
+    }
+}
+
+fn mesh_rectangle(size: Extent3d) -> Mesh {
+    Mesh::from(Rectangle {
+        half_size: Vec2::new(size.width as f32, size.height as f32) / 2.0,
+    })
 }
 
 fn overlay_post_process(mesh: Handle<Mesh>, material: Handle<OutlineMaterial>) -> impl Bundle {
     (
         MaterialMesh2dBundle {
             mesh: mesh.into(),
-            transform: Transform::from_translation(Vec3::new(0.0, 0.0, -1.0)),
+            transform: Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
             material,
             ..default()
         },
@@ -97,11 +88,11 @@ fn overlay_post_process(mesh: Handle<Mesh>, material: Handle<OutlineMaterial>) -
     )
 }
 
-fn camera_world(handle: Handle<Image>) -> impl Bundle {
+fn camera_world(order: isize) -> impl Bundle {
     (
         Camera2dBundle {
             camera: Camera {
-                target: RenderTarget::Image(handle),
+                order,
                 clear_color: ClearColorConfig::Custom(Color::rgba_u8(0, 0, 0, 0)),
                 ..default()
             },
@@ -111,12 +102,27 @@ fn camera_world(handle: Handle<Image>) -> impl Bundle {
     )
 }
 
+fn camera_post_process(order: isize) -> impl Bundle {
+    (
+        Camera2dBundle {
+            camera: Camera {
+                order,
+                clear_color: ClearColorConfig::None,
+                ..default()
+            },
+            ..default()
+        },
+        RenderLayers::layer(LAYER_POST_PROCESS),
+    )
+}
+
 fn camera_interactive(handle: Handle<Image>) -> impl Bundle {
     (
         Camera2dBundle {
             camera: Camera {
                 target: RenderTarget::Image(handle),
                 clear_color: ClearColorConfig::Custom(Color::rgba_u8(0, 0, 0, 0)),
+
                 ..default()
             },
 
