@@ -23,7 +23,7 @@ use bevy::{
 };
 
 use crate::{
-    helpers::{LAYER_INTERACTIVE, LAYER_POST_PROCESS, LAYER_WORLD},
+    helpers::{LAYER_INTERACTIVE, LAYER_POST_PROCESS, LAYER_UI, LAYER_WORLD},
     materials::OutlineMaterial,
 };
 
@@ -52,6 +52,7 @@ pub fn startup_add_cameras(
     commands.spawn(camera_interactive(outline_handle.clone()));
     commands.spawn(camera_world(0));
     commands.spawn(camera_post_process(1));
+    commands.spawn(camera_ui(2));
 }
 
 fn size_window(window: &Window) -> Extent3d {
@@ -113,6 +114,20 @@ fn camera_post_process(order: isize) -> impl Bundle {
             ..default()
         },
         RenderLayers::layer(LAYER_POST_PROCESS),
+    )
+}
+
+fn camera_ui(order: isize) -> impl Bundle {
+    (
+        Camera2dBundle {
+            camera: Camera {
+                order,
+                clear_color: ClearColorConfig::None,
+                ..default()
+            },
+            ..default()
+        },
+        RenderLayers::layer(LAYER_UI),
     )
 }
 

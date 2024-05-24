@@ -5,6 +5,9 @@ use bevy::{
 };
 
 #[derive(Default, Component)]
+pub struct Id(pub i64);
+
+#[derive(Default, Component)]
 pub struct Interactive(pub bool);
 
 #[derive(Default, Component)]
@@ -22,6 +25,9 @@ pub struct Speed(pub f32);
 #[derive(Default, Component)]
 pub struct Velocity(pub Vec2);
 
+#[derive(Default, Component)]
+pub struct SortY;
+
 #[derive(Default, Clone, Copy)]
 pub struct Frame {
     pub index: usize,
@@ -35,17 +41,6 @@ pub struct Animation {
     pub looping: bool,
     pub frame_index: usize,
     pub frames: Vec<Frame>,
-}
-
-impl Animation {
-    pub fn new(frames: Vec<Frame>) -> Self {
-        Self {
-            t: 0.0,
-            looping: true,
-            frame_index: 0,
-            frames,
-        }
-    }
 }
 
 #[derive(Resource)]
