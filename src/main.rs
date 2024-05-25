@@ -13,7 +13,7 @@ use bevy::{
 use helpers::LAYER_INTERACTIVE;
 use materials::OutlineMaterial;
 
-use styles::*;
+use stylesheet::*;
 
 mod components;
 mod helpers;
@@ -21,7 +21,7 @@ mod materials;
 mod overworld;
 
 #[macro_use]
-mod styles;
+mod stylesheet;
 
 #[derive(States, Debug, Clone, PartialEq, Eq, Hash)]
 enum AppState {
@@ -80,11 +80,12 @@ fn startup_add_people(
         RenderLayers::layer(LAYER_WORLD),
     ));
 
-    commands
-        .spawn((Id(0), div(cn![flex, bg_white, w_full, h_full])))
-        .with_children(|parent| {
-            parent.spawn(img(cn![w_full, h_full], image));
+    let root = (Id(0), div(cn![flex, flex_col, justify_end, w_full, h_full]));
+    commands.spawn(root).with_children(|p| {
+        p.spawn(button(cn![bg_white])).with_children(|p| {
+            p.spawn(text(cn![text_black], "Start Game"));
         });
+    });
 }
 
 fn player_set_closest_interactive(
