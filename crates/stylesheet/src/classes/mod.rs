@@ -1,13 +1,14 @@
 mod colors;
+mod display;
 mod flex;
-mod height;
+
 mod inset;
 mod position;
-mod width;
+mod space;
 
 pub use colors::*;
+pub use display::*;
 pub use flex::*;
-pub use height::*;
 pub use inset::*;
 pub use position::*;
-pub use width::*;
+pub use space::*;

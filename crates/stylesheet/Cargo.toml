@@ -12,6 +12,7 @@ bevy = { version = "^0.13.2", features = [
     "file_watcher",
 ] }
 el = { workspace = true }
+parse-display = "0.9.0"
 
 [[bin]]
 name = "generate"
