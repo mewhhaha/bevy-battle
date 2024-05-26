@@ -75,6 +75,12 @@ macro_rules! el {
     };
 }
 
+enum MenuAction {
+    Attack,
+    Items,
+    Defend,
+}
+
 fn startup_add_people(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -119,26 +125,30 @@ fn startup_add_people(
         RenderLayers::layer(LAYER_WORLD),
     ));
 
-    let root = (
-        Id(0),
-        div(cn![absolute, inset_0, flex, flex_col, justify_end]),
-    );
+    let root = (Id(0), div(cn![w_full, h_full, relative]));
 
     fn menu_text(t: impl Into<String>) -> impl FnOnce(&mut ChildBuilder) {
         el!(text::<text_black>(t))
     }
 
-    fn menu_button(t: impl Into<String>) -> impl FnOnce(&mut ChildBuilder) {
-        el!(button::<bg_white>, [menu_text(t)])
+    fn menu_button(t: MenuAction) -> impl FnOnce(&mut ChildBuilder) {
+        el!(
+            button::<bg_white>,
+            [menu_text(match t.into() {
+                MenuAction::Attack => "Attack",
+                MenuAction::Items => "Items",
+                MenuAction::Defend => "Defend",
+            })]
+        )
     }
 
     fn menu() -> impl FnOnce(&mut ChildBuilder) {
         el!(
             div::<flex, flex_col, h_full, w_64>,
             [
-                menu_button("Attack"),
-                menu_button("Items"),
-                menu_button("Defend")
+                menu_button(MenuAction::Attack),
+                menu_button(MenuAction::Items),
+                menu_button(MenuAction::Defend)
             ]
         )
     }
