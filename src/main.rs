@@ -3,6 +3,7 @@ use crate::helpers::{create_shape, LAYER_WORLD};
 use crate::overworld::*;
 
 use bevy::app::PluginGroupBuilder;
+use bevy::ecs::system::EntityCommands;
 use bevy::render::view::RenderLayers;
 use bevy::sprite::{Material2dPlugin, Mesh2dHandle};
 use bevy::{
@@ -37,17 +38,20 @@ enum RunningState {
 }
 
 macro_rules! el {
-    ($element:ident::<$($classes:tt),*>$(($($args:expr),*))?$(, [$($children:expr),*])?) => {
-        el!($element(cn!($($classes),*)$(, $($args),*)?)$(, [$($children),*])?)
+    ($bundle:expr, $element:ident::<$($classes:tt),*>$(($($args:expr),*))?  $(, [$($children:expr),*])?) => {
+        el!(@build, $bundle, $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
     };
-    ($element:expr, [$($child:expr),*]) => {
+    ($element:ident::<$($classes:tt),*>$(($($args:expr),*))?  $(, [$($children:expr),*])?) => {
+        el!(@build, (), $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
+    };
+    (@build, $bundle:expr, $element:expr, [$($child:expr),*]) => {
         |p: &mut ChildBuilder| {
-            p.spawn($element).with_children(el!(@children, $($child),*));
+            p.spawn(($element, $bundle)).with_children(el!(@children, $($child),*));
         }
     };
-    ($element:expr) => {
+    (@build, $bundle:expr, $element:expr) => {
         |p: &mut ChildBuilder| {
-            p.spawn($element);
+            p.spawn(($element, $bundle));
         }
     };
     ($($child:expr),*) => {
@@ -56,7 +60,7 @@ macro_rules! el {
     (@children, $($child:expr),*) => {
         |p: &mut ChildBuilder| {
             $(
-                ($child)(p);
+                $child(p);
             )*
         }
     };
@@ -120,6 +124,7 @@ fn startup_add_people(
 
     fn menu_button(t: MenuAction) -> impl FnOnce(&mut ChildBuilder) {
         el!(
+            Id(1),
             button::<bg_white>,
             [menu_text(match t.into() {
                 MenuAction::Attack => "Attack",
