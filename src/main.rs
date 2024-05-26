@@ -37,17 +37,8 @@ enum RunningState {
 }
 
 macro_rules! el {
-    ($element:ident::<$($classes:tt),*>($($args:expr),*), [$($children:expr),*]) => {
-        el!($element(cn!($($classes),*), $($args),*), [$($children),*])
-    };
-    ($element:ident::<$($classes:tt),*>, [$($children:expr),*]) => {
-        el!($element(cn!($($classes),*)), [$($children),*])
-    };
-    ($element:ident::<$($classes:tt),*>($($args:expr),*)) => {
-        el!($element(cn!($($classes),*), $($args),*))
-    };
-    ($element:ident::<$($classes:tt),*>) => {
-        el!($element(cn!($($classes),*)))
+    ($element:ident::<$($classes:tt),*>$(($($args:expr),*))?$(, [$($children:expr),*])?) => {
+        el!($element(cn!($($classes),*)$(, $($args),*)?)$(, [$($children),*])?)
     };
     ($element:expr, [$($child:expr),*]) => {
         |p: &mut ChildBuilder| {
@@ -59,17 +50,13 @@ macro_rules! el {
             p.spawn($element);
         }
     };
+    ($($child:expr),*) => {
+        el!(@children, $($child),*)
+    };
     (@children, $($child:expr),*) => {
         |p: &mut ChildBuilder| {
             $(
                 ($child)(p);
-            )*
-        }
-    };
-    ($($element:expr),*) => {
-        |p: &mut ChildBuilder| {
-            $(
-                ($element)(p);
             )*
         }
     };

@@ -13,6 +13,9 @@ use bevy::{
 use crate::helpers::LAYER_UI;
 
 macro_rules! cn {
+    () => {
+        cn!([])
+    };
     [$($name:expr),*] => {
         |mut _bundle| {$(
             $name(&mut _bundle)
