@@ -84,7 +84,7 @@ fn startup_add_people(
         RenderLayers::layer(LAYER_WORLD),
     ));
 
-    let root = (Id(0), div(cn![w_full, h_full, relative, bg_red_500]));
+    let root = (Id(0), div(cn![w_full, h_full, relative]));
 
     fn menu_text(t: MenuAction) -> impl FnOnce(&mut ChildBuilder) {
         el!(text::<text_black>(match t.into() {
@@ -101,7 +101,7 @@ fn startup_add_people(
     commands.spawn(root).with_children(el![
         el!(img::<absolute, inset_0>(image.clone())),
         el!(
-            div::<w_full, h_96, bg_black>,
+            div::<w_full, h_96>,
             [el!(
                 div::<flex, flex_col, h_full, w_64>,
                 [

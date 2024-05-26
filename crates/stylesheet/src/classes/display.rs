@@ -1,4 +1,4 @@
-use bevy::ui::{Display, UiRect, Val};
+use bevy::ui::Display;
 use el::HasStyle;
 
 pub fn flex(bundle: &mut impl HasStyle) {

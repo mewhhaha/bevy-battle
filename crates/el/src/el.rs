@@ -1,7 +1,7 @@
 use bevy::{
     asset::Handle,
     ecs::bundle::Bundle,
-    render::texture::Image,
+    render::{texture::Image, view::RenderLayers},
     text::{Text, TextStyle},
     ui::{
         node_bundles::{ButtonBundle, ImageBundle, NodeBundle, TextBundle},
@@ -112,7 +112,7 @@ pub fn div(class: impl FnOnce(&mut NodeBundle)) -> impl Bundle {
     let mut bundle = NodeBundle::default();
     class(&mut bundle);
 
-    bundle
+    (bundle, RenderLayers::layer(31))
 }
 
 pub fn text(class: impl FnOnce(&mut TextBundle), text: impl Into<String>) -> impl Bundle {
@@ -122,14 +122,14 @@ pub fn text(class: impl FnOnce(&mut TextBundle), text: impl Into<String>) -> imp
     };
 
     class(&mut bundle);
-    bundle
+    (bundle, RenderLayers::layer(31))
 }
 
 pub fn button(class: impl FnOnce(&mut ButtonBundle)) -> impl Bundle {
     let mut bundle = ButtonBundle::default();
     class(&mut bundle);
 
-    (bundle,)
+    (bundle, RenderLayers::layer(31))
 }
 
 pub fn img(class: impl FnOnce(&mut ImageBundle), src: Handle<Image>) -> impl Bundle {
@@ -137,5 +137,5 @@ pub fn img(class: impl FnOnce(&mut ImageBundle), src: Handle<Image>) -> impl Bun
     class(&mut bundle);
 
     bundle.image = UiImage::new(src);
-    (bundle,)
+    (bundle, RenderLayers::layer(31))
 }
