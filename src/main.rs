@@ -36,6 +36,45 @@ enum RunningState {
     Paused,
 }
 
+macro_rules! el {
+    ($element:ident::<$($classes:tt),*>($($args:expr),*), [$($children:expr),*]) => {
+        el!($element(cn!($($classes),*), $($args),*), [$($children),*])
+    };
+    ($element:ident::<$($classes:tt),*>, [$($children:expr),*]) => {
+        el!($element(cn!($($classes),*)), [$($children),*])
+    };
+    ($element:ident::<$($classes:tt),*>($($args:expr),*)) => {
+        el!($element(cn!($($classes),*), $($args),*))
+    };
+    ($element:ident::<$($classes:tt),*>) => {
+        el!($element(cn!($($classes),*)))
+    };
+    ($element:expr, [$($child:expr),*]) => {
+        |p: &mut ChildBuilder| {
+            p.spawn($element).with_children(el!(@children, $($child),*));
+        }
+    };
+    ($element:expr) => {
+        |p: &mut ChildBuilder| {
+            p.spawn($element);
+        }
+    };
+    (@children, $($child:expr),*) => {
+        |p: &mut ChildBuilder| {
+            $(
+                ($child)(p);
+            )*
+        }
+    };
+    ($($element:expr),*) => {
+        |p: &mut ChildBuilder| {
+            $(
+                ($element)(p);
+            )*
+        }
+    };
+}
+
 fn startup_add_people(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -80,12 +119,34 @@ fn startup_add_people(
         RenderLayers::layer(LAYER_WORLD),
     ));
 
-    let root = (Id(0), div(cn![flex, flex_col, justify_end, w_full, h_full]));
-    commands.spawn(root).with_children(|p| {
-        p.spawn(button(cn![bg_white])).with_children(|p| {
-            p.spawn(text(cn![text_black], "Start Game"));
-        });
-    });
+    let root = (
+        Id(0),
+        div(cn![absolute, inset_0, flex, flex_col, justify_end]),
+    );
+
+    fn menu_text(t: impl Into<String>) -> impl FnOnce(&mut ChildBuilder) {
+        el!(text::<text_black>(t))
+    }
+
+    fn menu_button(t: impl Into<String>) -> impl FnOnce(&mut ChildBuilder) {
+        el!(button::<bg_white>, [menu_text(t)])
+    }
+
+    fn menu() -> impl FnOnce(&mut ChildBuilder) {
+        el!(
+            div::<flex, flex_col, h_full, w_64>,
+            [
+                menu_button("Attack"),
+                menu_button("Items"),
+                menu_button("Defend")
+            ]
+        )
+    }
+
+    commands.spawn(root).with_children(el![
+        el!(img::<absolute, inset_0>(image.clone())),
+        el!(div::<w_full, h_96, bg_black>, [menu()])
+    ]);
 }
 
 fn player_set_closest_interactive(
