@@ -1,6 +1,5 @@
 use bevy::ui::Val;
-
-use crate::HasStyle;
+use el::HasStyle;
 
 /// ```
 ///

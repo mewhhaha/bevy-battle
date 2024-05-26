@@ -1,6 +1,5 @@
 use bevy::ui::Val;
-
-use crate::HasStyle;
+use el::HasStyle;
 
 pub fn inset_0(bundle: &mut impl HasStyle) {
     let style = bundle.style();

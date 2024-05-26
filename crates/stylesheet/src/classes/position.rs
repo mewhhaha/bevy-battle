@@ -1,6 +1,5 @@
 use bevy::ui::PositionType;
-
-use crate::HasStyle;
+use el::HasStyle;
 
 pub fn absolute(bundle: &mut impl HasStyle) {
     let style = bundle.style();

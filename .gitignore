@@ -1,4 +1,4 @@
-/target
-/imported_assets
+target
+imported_assets
 .DS_Store
 node_modules

@@ -3,7 +3,6 @@ use crate::helpers::{create_shape, LAYER_WORLD};
 use crate::overworld::*;
 
 use bevy::app::PluginGroupBuilder;
-use bevy::ecs::system::EntityCommands;
 use bevy::render::view::RenderLayers;
 use bevy::sprite::{Material2dPlugin, Mesh2dHandle};
 use bevy::{
@@ -11,18 +10,16 @@ use bevy::{
     asset::{AssetMode, AssetPlugin},
     prelude::*,
 };
+
+use el::*;
 use helpers::LAYER_INTERACTIVE;
 use materials::OutlineMaterial;
-
 use stylesheet::*;
 
 mod components;
 mod helpers;
 mod materials;
 mod overworld;
-
-#[macro_use]
-mod stylesheet;
 
 #[derive(States, Debug, Clone, PartialEq, Eq, Hash)]
 enum AppState {
@@ -35,35 +32,6 @@ enum AppState {
 enum RunningState {
     Running,
     Paused,
-}
-
-macro_rules! el {
-    ($bundle:expr, $element:ident::<$($classes:tt),*>$(($($args:expr),*))?  $(, [$($children:expr),*])?) => {
-        el!(@build, $bundle, $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
-    };
-    ($element:ident::<$($classes:tt),*>$(($($args:expr),*))?  $(, [$($children:expr),*])?) => {
-        el!(@build, (), $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
-    };
-    (@build, $bundle:expr, $element:expr, [$($child:expr),*]) => {
-        |p: &mut ChildBuilder| {
-            p.spawn(($element, $bundle)).with_children(el!(@children, $($child),*));
-        }
-    };
-    (@build, $bundle:expr, $element:expr) => {
-        |p: &mut ChildBuilder| {
-            p.spawn(($element, $bundle));
-        }
-    };
-    ($($child:expr),*) => {
-        el!(@children, $($child),*)
-    };
-    (@children, $($child:expr),*) => {
-        |p: &mut ChildBuilder| {
-            $(
-                $child(p);
-            )*
-        }
-    };
 }
 
 enum MenuAction {
@@ -116,38 +84,33 @@ fn startup_add_people(
         RenderLayers::layer(LAYER_WORLD),
     ));
 
-    let root = (Id(0), div(cn![w_full, h_full, relative]));
+    let root = (Id(0), div(cn![w_full, h_full, relative, bg_red_500]));
 
-    fn menu_text(t: impl Into<String>) -> impl FnOnce(&mut ChildBuilder) {
-        el!(text::<text_black>(t))
+    fn menu_text(t: MenuAction) -> impl FnOnce(&mut ChildBuilder) {
+        el!(text::<text_black>(match t.into() {
+            MenuAction::Attack => "Attack",
+            MenuAction::Items => "Items",
+            MenuAction::Defend => "Defend",
+        }))
     }
 
     fn menu_button(t: MenuAction) -> impl FnOnce(&mut ChildBuilder) {
-        el!(
-            Id(1),
-            button::<bg_white>,
-            [menu_text(match t.into() {
-                MenuAction::Attack => "Attack",
-                MenuAction::Items => "Items",
-                MenuAction::Defend => "Defend",
-            })]
-        )
-    }
-
-    fn menu() -> impl FnOnce(&mut ChildBuilder) {
-        el!(
-            div::<flex, flex_col, h_full, w_64>,
-            [
-                menu_button(MenuAction::Attack),
-                menu_button(MenuAction::Items),
-                menu_button(MenuAction::Defend)
-            ]
-        )
+        el!(Id(1), button::<bg_white>, [menu_text(t)])
     }
 
     commands.spawn(root).with_children(el![
         el!(img::<absolute, inset_0>(image.clone())),
-        el!(div::<w_full, h_96, bg_black>, [menu()])
+        el!(
+            div::<w_full, h_96, bg_black>,
+            [el!(
+                div::<flex, flex_col, h_full, w_64>,
+                [
+                    menu_button(MenuAction::Attack),
+                    menu_button(MenuAction::Items),
+                    menu_button(MenuAction::Defend)
+                ]
+            )]
+        )
     ]);
 }
 
