@@ -21,7 +21,7 @@ pub fn generate() -> io::Result<()> {
         .expect("couldn't open file")
         .lines()
         .map(str::parse::<Class>)
-        .filter_map(Result::ok)
+        .map(|res| res.expect("Parse failed"))
         .map(generate_classes)
         .collect::<String>();
 
@@ -69,7 +69,7 @@ fn generate_text_color(name: &String, value: &String) -> String {
 /// {value}
 /// ```
 pub fn text_{name}(bundle: &mut impl HasText) {{
-    let mut text = bundle.text();
+    let text = bundle.text();
     text.sections.iter_mut().for_each(|section| {{
         section.style.color = {value};
     }});
