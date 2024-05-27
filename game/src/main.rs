@@ -52,7 +52,8 @@ fn startup_add_people(
     let green = materials.add(Color::rgb(0.0, 1.0, 0.0));
     let blue = materials.add(Color::rgb(0.0, 0.0, 1.0));
 
-    let image = asset_server.load::<Image>("textures/spritesheet.png");
+    let p_image = asset_server.load::<Image>("textures/portrait.png");
+    let bg_image = asset_server.load::<Image>("textures/background.png");
 
     commands.spawn((
         Player,
@@ -84,10 +85,8 @@ fn startup_add_people(
         RenderLayers::layer(LAYER_WORLD),
     ));
 
-    let root = (Id(0), div(cn![w_full, h_full, relative]));
-
     fn menu_text(t: MenuAction) -> impl FnOnce(&mut ChildBuilder) {
-        el!(text::<text_black>(match t.into() {
+        el!(text::<text_black, text_4xl>(match t.into() {
             MenuAction::Attack => "Attack",
             MenuAction::Items => "Items",
             MenuAction::Defend => "Defend",
@@ -95,7 +94,11 @@ fn startup_add_people(
     }
 
     fn menu_button(t: MenuAction) -> impl FnOnce(&mut ChildBuilder) {
-        el!(Id(1), button::<bg_white>, [menu_text(t)])
+        el!(
+            Id(1),
+            button::<bg_white, flex, justify_center>,
+            [menu_text(t)]
+        )
     }
 
     fn background(image: &Handle<Image>) -> impl FnOnce(&mut ChildBuilder) + '_ {
@@ -103,24 +106,37 @@ fn startup_add_people(
     }
 
     fn footer(
-        class: impl FnOnce(&mut NodeBundle),
-        slot: impl FnOnce(&mut ChildBuilder),
+        menu: impl FnOnce(&mut ChildBuilder),
+        portraits: impl FnOnce(&mut ChildBuilder),
     ) -> impl FnOnce(&mut ChildBuilder) {
-        el!(div::<w_full, flex, h_96, class>, [slot])
+        el!(
+            div::<w_full, flex, h_48, bg_black, p_4>,
+            [
+                el!(div::<flex, flex_col, h_full, w_64, bg_amber_100>, [menu]),
+                el!(
+                    div::<flex, grow, p_4, gap_4, justify_center, bg_rose_100>,
+                    [portraits]
+                )
+            ]
+        )
     }
 
-    commands.spawn(root).with_children(el![
-        background(&image),
+    fn frame(image: &Handle<Image>) -> impl FnOnce(&mut ChildBuilder) + '_ {
         el!(
-            footer::<'slot>,
-            el!(
-                div::<flex, flex_col, h_full, w_64>,
-                [
-                    menu_button(MenuAction::Attack),
-                    menu_button(MenuAction::Items),
-                    menu_button(MenuAction::Defend)
-                ]
-            )
+            div::<w_32, h_32, bg_black, p_4>,
+            [el!(img::<w_full, h_full>(image.clone()))]
+        )
+    }
+
+    let root = (Id(0), div(cn![flex, items_end, w_full, h_full, relative]));
+    commands.spawn(root).with_children(el![
+        background(&bg_image),
+        footer(
+            el![
+                menu_button(MenuAction::Attack),
+                menu_button(MenuAction::Defend)
+            ],
+            el![frame(&p_image), frame(&p_image), frame(&p_image)]
         )
     ]);
 }

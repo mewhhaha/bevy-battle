@@ -25,10 +25,7 @@ pub fn generate() -> io::Result<()> {
     let classes = fs::read_to_string(input_file_path)
         .expect("couldn't open file")
         .lines()
-        .map(|l| {
-            println!("{}", l);
-            l.parse::<Class>()
-        })
+        .map(str::parse::<Class>)
         .map(|res| res.expect("Parse failed"))
         .map(generate_classes)
         .collect::<String>();
@@ -57,11 +54,11 @@ fn generate_classes(class: Class) -> String {
 
     let mut result = "".to_string();
 
-    result += &generate_size(&name, &value);
+    result += &generate_percent_and_px(&name, &value);
 
     match &class {
-        Class::Px(_, _) | Class::Rem(_, _, _) => {
-            result += &generate_margin_and_padding(&name, &value);
+        Class::Px(_, _) | Class::Rem(_, _, _) | Class::Auto => {
+            result += &generate_px(&name, &value);
         }
         _ => {}
     }
@@ -69,7 +66,7 @@ fn generate_classes(class: Class) -> String {
     result
 }
 
-fn generate_size(name: &String, value: &String) -> String {
+fn generate_percent_and_px(name: &String, value: &String) -> String {
     let sizes = [
         ("w", format!("style.width = {value};")),
         ("h", format!("style.height = {value};")),
@@ -77,6 +74,7 @@ fn generate_size(name: &String, value: &String) -> String {
             "size",
             format!("style.width = {value};\nstyle.height = {value};"),
         ),
+        ("basis", format!("style.flex_basis = {value};")),
     ];
 
     let mut result = "".to_string();
@@ -99,7 +97,7 @@ pub fn {prefix}_{name}(bundle: &mut impl HasStyle) {{
     result
 }
 
-fn generate_margin_and_padding(name: &String, value: &String) -> String {
+fn generate_px(name: &String, value: &String) -> String {
     let paddings = [
         ("p", format!("style.padding = UiRect::all({value});")),
         ("pt", format!("style.padding.top = {value};")),
@@ -139,8 +137,18 @@ style.margin.bottom = {value};"
             "my",
             format!(
                 "
-        style.margin.top = {value};
-        style.margin.bottom = {value};"
+style.margin.top = {value};
+style.margin.bottom = {value};"
+            ),
+        ),
+        ("gap_y", format!("style.column_gap = {value};")),
+        ("gap_x", format!("style.row_gap = {value};")),
+        (
+            "gap",
+            format!(
+                "
+style.column_gap = {value};
+style.row_gap = {value};"
             ),
         ),
     ];

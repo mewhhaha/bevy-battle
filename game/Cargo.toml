@@ -10,6 +10,7 @@ bevy = { version = "0.13.2", features = [
     "dynamic_linking",
     "asset_processor",
     "file_watcher",
+    "jpeg",
 ] }
 el = { workspace = true }
 stylesheet = { workspace = true }

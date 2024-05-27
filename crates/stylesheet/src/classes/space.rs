@@ -34,6 +34,15 @@ style.height = Val::Px(0f32);
 ///
 /// Val::Px(0f32)
 /// ```
+pub fn basis_0(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(0f32);
+}
+
+/// ```
+///
+/// Val::Px(0f32)
+/// ```
 pub fn p_0(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.padding = UiRect::all(Val::Px(0f32));
@@ -160,8 +169,37 @@ style.margin.bottom = Val::Px(0f32);
 pub fn my_0(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(0f32);
-        style.margin.bottom = Val::Px(0f32);
+style.margin.top = Val::Px(0f32);
+style.margin.bottom = Val::Px(0f32);
+}
+
+/// ```
+///
+/// Val::Px(0f32)
+/// ```
+pub fn gap_y_0(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(0f32);
+}
+
+/// ```
+///
+/// Val::Px(0f32)
+/// ```
+pub fn gap_x_0(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(0f32);
+}
+
+/// ```
+///
+/// Val::Px(0f32)
+/// ```
+pub fn gap_0(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(0f32);
+style.row_gap = Val::Px(0f32);
 }
 
 /// ```
@@ -190,6 +228,15 @@ pub fn size_px(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(1f32);
 style.height = Val::Px(1f32);
+}
+
+/// ```
+///
+/// Val::Px(1f32)
+/// ```
+pub fn basis_px(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(1f32);
 }
 
 /// ```
@@ -322,8 +369,37 @@ style.margin.bottom = Val::Px(1f32);
 pub fn my_px(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(1f32);
-        style.margin.bottom = Val::Px(1f32);
+style.margin.top = Val::Px(1f32);
+style.margin.bottom = Val::Px(1f32);
+}
+
+/// ```
+///
+/// Val::Px(1f32)
+/// ```
+pub fn gap_y_px(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(1f32);
+}
+
+/// ```
+///
+/// Val::Px(1f32)
+/// ```
+pub fn gap_x_px(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(1f32);
+}
+
+/// ```
+///
+/// Val::Px(1f32)
+/// ```
+pub fn gap_px(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(1f32);
+style.row_gap = Val::Px(1f32);
 }
 
 /// ```
@@ -352,6 +428,15 @@ pub fn size_0p5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(2f32);
 style.height = Val::Px(2f32);
+}
+
+/// ```
+///
+/// Val::Px(2f32)
+/// ```
+pub fn basis_0p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(2f32);
 }
 
 /// ```
@@ -484,8 +569,37 @@ style.margin.bottom = Val::Px(2f32);
 pub fn my_0p5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(2f32);
-        style.margin.bottom = Val::Px(2f32);
+style.margin.top = Val::Px(2f32);
+style.margin.bottom = Val::Px(2f32);
+}
+
+/// ```
+///
+/// Val::Px(2f32)
+/// ```
+pub fn gap_y_0p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(2f32);
+}
+
+/// ```
+///
+/// Val::Px(2f32)
+/// ```
+pub fn gap_x_0p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(2f32);
+}
+
+/// ```
+///
+/// Val::Px(2f32)
+/// ```
+pub fn gap_0p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(2f32);
+style.row_gap = Val::Px(2f32);
 }
 
 /// ```
@@ -514,6 +628,15 @@ pub fn size_1(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(4f32);
 style.height = Val::Px(4f32);
+}
+
+/// ```
+///
+/// Val::Px(4f32)
+/// ```
+pub fn basis_1(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(4f32);
 }
 
 /// ```
@@ -646,8 +769,37 @@ style.margin.bottom = Val::Px(4f32);
 pub fn my_1(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(4f32);
-        style.margin.bottom = Val::Px(4f32);
+style.margin.top = Val::Px(4f32);
+style.margin.bottom = Val::Px(4f32);
+}
+
+/// ```
+///
+/// Val::Px(4f32)
+/// ```
+pub fn gap_y_1(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(4f32);
+}
+
+/// ```
+///
+/// Val::Px(4f32)
+/// ```
+pub fn gap_x_1(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(4f32);
+}
+
+/// ```
+///
+/// Val::Px(4f32)
+/// ```
+pub fn gap_1(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(4f32);
+style.row_gap = Val::Px(4f32);
 }
 
 /// ```
@@ -676,6 +828,15 @@ pub fn size_1p5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(6f32);
 style.height = Val::Px(6f32);
+}
+
+/// ```
+///
+/// Val::Px(6f32)
+/// ```
+pub fn basis_1p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(6f32);
 }
 
 /// ```
@@ -808,8 +969,37 @@ style.margin.bottom = Val::Px(6f32);
 pub fn my_1p5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(6f32);
-        style.margin.bottom = Val::Px(6f32);
+style.margin.top = Val::Px(6f32);
+style.margin.bottom = Val::Px(6f32);
+}
+
+/// ```
+///
+/// Val::Px(6f32)
+/// ```
+pub fn gap_y_1p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(6f32);
+}
+
+/// ```
+///
+/// Val::Px(6f32)
+/// ```
+pub fn gap_x_1p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(6f32);
+}
+
+/// ```
+///
+/// Val::Px(6f32)
+/// ```
+pub fn gap_1p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(6f32);
+style.row_gap = Val::Px(6f32);
 }
 
 /// ```
@@ -838,6 +1028,15 @@ pub fn size_2(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(8f32);
 style.height = Val::Px(8f32);
+}
+
+/// ```
+///
+/// Val::Px(8f32)
+/// ```
+pub fn basis_2(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(8f32);
 }
 
 /// ```
@@ -970,8 +1169,37 @@ style.margin.bottom = Val::Px(8f32);
 pub fn my_2(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(8f32);
-        style.margin.bottom = Val::Px(8f32);
+style.margin.top = Val::Px(8f32);
+style.margin.bottom = Val::Px(8f32);
+}
+
+/// ```
+///
+/// Val::Px(8f32)
+/// ```
+pub fn gap_y_2(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(8f32);
+}
+
+/// ```
+///
+/// Val::Px(8f32)
+/// ```
+pub fn gap_x_2(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(8f32);
+}
+
+/// ```
+///
+/// Val::Px(8f32)
+/// ```
+pub fn gap_2(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(8f32);
+style.row_gap = Val::Px(8f32);
 }
 
 /// ```
@@ -1000,6 +1228,15 @@ pub fn size_2p5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(10f32);
 style.height = Val::Px(10f32);
+}
+
+/// ```
+///
+/// Val::Px(10f32)
+/// ```
+pub fn basis_2p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(10f32);
 }
 
 /// ```
@@ -1132,8 +1369,37 @@ style.margin.bottom = Val::Px(10f32);
 pub fn my_2p5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(10f32);
-        style.margin.bottom = Val::Px(10f32);
+style.margin.top = Val::Px(10f32);
+style.margin.bottom = Val::Px(10f32);
+}
+
+/// ```
+///
+/// Val::Px(10f32)
+/// ```
+pub fn gap_y_2p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(10f32);
+}
+
+/// ```
+///
+/// Val::Px(10f32)
+/// ```
+pub fn gap_x_2p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(10f32);
+}
+
+/// ```
+///
+/// Val::Px(10f32)
+/// ```
+pub fn gap_2p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(10f32);
+style.row_gap = Val::Px(10f32);
 }
 
 /// ```
@@ -1162,6 +1428,15 @@ pub fn size_3(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(12f32);
 style.height = Val::Px(12f32);
+}
+
+/// ```
+///
+/// Val::Px(12f32)
+/// ```
+pub fn basis_3(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(12f32);
 }
 
 /// ```
@@ -1294,8 +1569,37 @@ style.margin.bottom = Val::Px(12f32);
 pub fn my_3(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(12f32);
-        style.margin.bottom = Val::Px(12f32);
+style.margin.top = Val::Px(12f32);
+style.margin.bottom = Val::Px(12f32);
+}
+
+/// ```
+///
+/// Val::Px(12f32)
+/// ```
+pub fn gap_y_3(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(12f32);
+}
+
+/// ```
+///
+/// Val::Px(12f32)
+/// ```
+pub fn gap_x_3(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(12f32);
+}
+
+/// ```
+///
+/// Val::Px(12f32)
+/// ```
+pub fn gap_3(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(12f32);
+style.row_gap = Val::Px(12f32);
 }
 
 /// ```
@@ -1324,6 +1628,15 @@ pub fn size_3p5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(14f32);
 style.height = Val::Px(14f32);
+}
+
+/// ```
+///
+/// Val::Px(14f32)
+/// ```
+pub fn basis_3p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(14f32);
 }
 
 /// ```
@@ -1456,8 +1769,37 @@ style.margin.bottom = Val::Px(14f32);
 pub fn my_3p5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(14f32);
-        style.margin.bottom = Val::Px(14f32);
+style.margin.top = Val::Px(14f32);
+style.margin.bottom = Val::Px(14f32);
+}
+
+/// ```
+///
+/// Val::Px(14f32)
+/// ```
+pub fn gap_y_3p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(14f32);
+}
+
+/// ```
+///
+/// Val::Px(14f32)
+/// ```
+pub fn gap_x_3p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(14f32);
+}
+
+/// ```
+///
+/// Val::Px(14f32)
+/// ```
+pub fn gap_3p5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(14f32);
+style.row_gap = Val::Px(14f32);
 }
 
 /// ```
@@ -1486,6 +1828,15 @@ pub fn size_4(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(16f32);
 style.height = Val::Px(16f32);
+}
+
+/// ```
+///
+/// Val::Px(16f32)
+/// ```
+pub fn basis_4(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(16f32);
 }
 
 /// ```
@@ -1618,8 +1969,37 @@ style.margin.bottom = Val::Px(16f32);
 pub fn my_4(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(16f32);
-        style.margin.bottom = Val::Px(16f32);
+style.margin.top = Val::Px(16f32);
+style.margin.bottom = Val::Px(16f32);
+}
+
+/// ```
+///
+/// Val::Px(16f32)
+/// ```
+pub fn gap_y_4(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(16f32);
+}
+
+/// ```
+///
+/// Val::Px(16f32)
+/// ```
+pub fn gap_x_4(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(16f32);
+}
+
+/// ```
+///
+/// Val::Px(16f32)
+/// ```
+pub fn gap_4(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(16f32);
+style.row_gap = Val::Px(16f32);
 }
 
 /// ```
@@ -1648,6 +2028,15 @@ pub fn size_5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(20f32);
 style.height = Val::Px(20f32);
+}
+
+/// ```
+///
+/// Val::Px(20f32)
+/// ```
+pub fn basis_5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(20f32);
 }
 
 /// ```
@@ -1780,8 +2169,37 @@ style.margin.bottom = Val::Px(20f32);
 pub fn my_5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(20f32);
-        style.margin.bottom = Val::Px(20f32);
+style.margin.top = Val::Px(20f32);
+style.margin.bottom = Val::Px(20f32);
+}
+
+/// ```
+///
+/// Val::Px(20f32)
+/// ```
+pub fn gap_y_5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(20f32);
+}
+
+/// ```
+///
+/// Val::Px(20f32)
+/// ```
+pub fn gap_x_5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(20f32);
+}
+
+/// ```
+///
+/// Val::Px(20f32)
+/// ```
+pub fn gap_5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(20f32);
+style.row_gap = Val::Px(20f32);
 }
 
 /// ```
@@ -1810,6 +2228,15 @@ pub fn size_6(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(24f32);
 style.height = Val::Px(24f32);
+}
+
+/// ```
+///
+/// Val::Px(24f32)
+/// ```
+pub fn basis_6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(24f32);
 }
 
 /// ```
@@ -1942,8 +2369,37 @@ style.margin.bottom = Val::Px(24f32);
 pub fn my_6(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(24f32);
-        style.margin.bottom = Val::Px(24f32);
+style.margin.top = Val::Px(24f32);
+style.margin.bottom = Val::Px(24f32);
+}
+
+/// ```
+///
+/// Val::Px(24f32)
+/// ```
+pub fn gap_y_6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(24f32);
+}
+
+/// ```
+///
+/// Val::Px(24f32)
+/// ```
+pub fn gap_x_6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(24f32);
+}
+
+/// ```
+///
+/// Val::Px(24f32)
+/// ```
+pub fn gap_6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(24f32);
+style.row_gap = Val::Px(24f32);
 }
 
 /// ```
@@ -1972,6 +2428,15 @@ pub fn size_7(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(28f32);
 style.height = Val::Px(28f32);
+}
+
+/// ```
+///
+/// Val::Px(28f32)
+/// ```
+pub fn basis_7(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(28f32);
 }
 
 /// ```
@@ -2104,8 +2569,37 @@ style.margin.bottom = Val::Px(28f32);
 pub fn my_7(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(28f32);
-        style.margin.bottom = Val::Px(28f32);
+style.margin.top = Val::Px(28f32);
+style.margin.bottom = Val::Px(28f32);
+}
+
+/// ```
+///
+/// Val::Px(28f32)
+/// ```
+pub fn gap_y_7(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(28f32);
+}
+
+/// ```
+///
+/// Val::Px(28f32)
+/// ```
+pub fn gap_x_7(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(28f32);
+}
+
+/// ```
+///
+/// Val::Px(28f32)
+/// ```
+pub fn gap_7(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(28f32);
+style.row_gap = Val::Px(28f32);
 }
 
 /// ```
@@ -2134,6 +2628,15 @@ pub fn size_8(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(32f32);
 style.height = Val::Px(32f32);
+}
+
+/// ```
+///
+/// Val::Px(32f32)
+/// ```
+pub fn basis_8(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(32f32);
 }
 
 /// ```
@@ -2266,8 +2769,37 @@ style.margin.bottom = Val::Px(32f32);
 pub fn my_8(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(32f32);
-        style.margin.bottom = Val::Px(32f32);
+style.margin.top = Val::Px(32f32);
+style.margin.bottom = Val::Px(32f32);
+}
+
+/// ```
+///
+/// Val::Px(32f32)
+/// ```
+pub fn gap_y_8(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(32f32);
+}
+
+/// ```
+///
+/// Val::Px(32f32)
+/// ```
+pub fn gap_x_8(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(32f32);
+}
+
+/// ```
+///
+/// Val::Px(32f32)
+/// ```
+pub fn gap_8(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(32f32);
+style.row_gap = Val::Px(32f32);
 }
 
 /// ```
@@ -2296,6 +2828,15 @@ pub fn size_9(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(36f32);
 style.height = Val::Px(36f32);
+}
+
+/// ```
+///
+/// Val::Px(36f32)
+/// ```
+pub fn basis_9(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(36f32);
 }
 
 /// ```
@@ -2428,8 +2969,37 @@ style.margin.bottom = Val::Px(36f32);
 pub fn my_9(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(36f32);
-        style.margin.bottom = Val::Px(36f32);
+style.margin.top = Val::Px(36f32);
+style.margin.bottom = Val::Px(36f32);
+}
+
+/// ```
+///
+/// Val::Px(36f32)
+/// ```
+pub fn gap_y_9(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(36f32);
+}
+
+/// ```
+///
+/// Val::Px(36f32)
+/// ```
+pub fn gap_x_9(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(36f32);
+}
+
+/// ```
+///
+/// Val::Px(36f32)
+/// ```
+pub fn gap_9(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(36f32);
+style.row_gap = Val::Px(36f32);
 }
 
 /// ```
@@ -2458,6 +3028,15 @@ pub fn size_10(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(40f32);
 style.height = Val::Px(40f32);
+}
+
+/// ```
+///
+/// Val::Px(40f32)
+/// ```
+pub fn basis_10(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(40f32);
 }
 
 /// ```
@@ -2590,8 +3169,37 @@ style.margin.bottom = Val::Px(40f32);
 pub fn my_10(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(40f32);
-        style.margin.bottom = Val::Px(40f32);
+style.margin.top = Val::Px(40f32);
+style.margin.bottom = Val::Px(40f32);
+}
+
+/// ```
+///
+/// Val::Px(40f32)
+/// ```
+pub fn gap_y_10(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(40f32);
+}
+
+/// ```
+///
+/// Val::Px(40f32)
+/// ```
+pub fn gap_x_10(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(40f32);
+}
+
+/// ```
+///
+/// Val::Px(40f32)
+/// ```
+pub fn gap_10(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(40f32);
+style.row_gap = Val::Px(40f32);
 }
 
 /// ```
@@ -2620,6 +3228,15 @@ pub fn size_11(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(44f32);
 style.height = Val::Px(44f32);
+}
+
+/// ```
+///
+/// Val::Px(44f32)
+/// ```
+pub fn basis_11(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(44f32);
 }
 
 /// ```
@@ -2752,8 +3369,37 @@ style.margin.bottom = Val::Px(44f32);
 pub fn my_11(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(44f32);
-        style.margin.bottom = Val::Px(44f32);
+style.margin.top = Val::Px(44f32);
+style.margin.bottom = Val::Px(44f32);
+}
+
+/// ```
+///
+/// Val::Px(44f32)
+/// ```
+pub fn gap_y_11(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(44f32);
+}
+
+/// ```
+///
+/// Val::Px(44f32)
+/// ```
+pub fn gap_x_11(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(44f32);
+}
+
+/// ```
+///
+/// Val::Px(44f32)
+/// ```
+pub fn gap_11(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(44f32);
+style.row_gap = Val::Px(44f32);
 }
 
 /// ```
@@ -2782,6 +3428,15 @@ pub fn size_12(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(48f32);
 style.height = Val::Px(48f32);
+}
+
+/// ```
+///
+/// Val::Px(48f32)
+/// ```
+pub fn basis_12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(48f32);
 }
 
 /// ```
@@ -2914,8 +3569,37 @@ style.margin.bottom = Val::Px(48f32);
 pub fn my_12(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(48f32);
-        style.margin.bottom = Val::Px(48f32);
+style.margin.top = Val::Px(48f32);
+style.margin.bottom = Val::Px(48f32);
+}
+
+/// ```
+///
+/// Val::Px(48f32)
+/// ```
+pub fn gap_y_12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(48f32);
+}
+
+/// ```
+///
+/// Val::Px(48f32)
+/// ```
+pub fn gap_x_12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(48f32);
+}
+
+/// ```
+///
+/// Val::Px(48f32)
+/// ```
+pub fn gap_12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(48f32);
+style.row_gap = Val::Px(48f32);
 }
 
 /// ```
@@ -2944,6 +3628,15 @@ pub fn size_14(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(56f32);
 style.height = Val::Px(56f32);
+}
+
+/// ```
+///
+/// Val::Px(56f32)
+/// ```
+pub fn basis_14(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(56f32);
 }
 
 /// ```
@@ -3076,8 +3769,37 @@ style.margin.bottom = Val::Px(56f32);
 pub fn my_14(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(56f32);
-        style.margin.bottom = Val::Px(56f32);
+style.margin.top = Val::Px(56f32);
+style.margin.bottom = Val::Px(56f32);
+}
+
+/// ```
+///
+/// Val::Px(56f32)
+/// ```
+pub fn gap_y_14(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(56f32);
+}
+
+/// ```
+///
+/// Val::Px(56f32)
+/// ```
+pub fn gap_x_14(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(56f32);
+}
+
+/// ```
+///
+/// Val::Px(56f32)
+/// ```
+pub fn gap_14(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(56f32);
+style.row_gap = Val::Px(56f32);
 }
 
 /// ```
@@ -3106,6 +3828,15 @@ pub fn size_16(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(64f32);
 style.height = Val::Px(64f32);
+}
+
+/// ```
+///
+/// Val::Px(64f32)
+/// ```
+pub fn basis_16(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(64f32);
 }
 
 /// ```
@@ -3238,8 +3969,37 @@ style.margin.bottom = Val::Px(64f32);
 pub fn my_16(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(64f32);
-        style.margin.bottom = Val::Px(64f32);
+style.margin.top = Val::Px(64f32);
+style.margin.bottom = Val::Px(64f32);
+}
+
+/// ```
+///
+/// Val::Px(64f32)
+/// ```
+pub fn gap_y_16(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(64f32);
+}
+
+/// ```
+///
+/// Val::Px(64f32)
+/// ```
+pub fn gap_x_16(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(64f32);
+}
+
+/// ```
+///
+/// Val::Px(64f32)
+/// ```
+pub fn gap_16(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(64f32);
+style.row_gap = Val::Px(64f32);
 }
 
 /// ```
@@ -3268,6 +4028,15 @@ pub fn size_20(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(80f32);
 style.height = Val::Px(80f32);
+}
+
+/// ```
+///
+/// Val::Px(80f32)
+/// ```
+pub fn basis_20(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(80f32);
 }
 
 /// ```
@@ -3400,8 +4169,37 @@ style.margin.bottom = Val::Px(80f32);
 pub fn my_20(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(80f32);
-        style.margin.bottom = Val::Px(80f32);
+style.margin.top = Val::Px(80f32);
+style.margin.bottom = Val::Px(80f32);
+}
+
+/// ```
+///
+/// Val::Px(80f32)
+/// ```
+pub fn gap_y_20(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(80f32);
+}
+
+/// ```
+///
+/// Val::Px(80f32)
+/// ```
+pub fn gap_x_20(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(80f32);
+}
+
+/// ```
+///
+/// Val::Px(80f32)
+/// ```
+pub fn gap_20(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(80f32);
+style.row_gap = Val::Px(80f32);
 }
 
 /// ```
@@ -3430,6 +4228,15 @@ pub fn size_24(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(96f32);
 style.height = Val::Px(96f32);
+}
+
+/// ```
+///
+/// Val::Px(96f32)
+/// ```
+pub fn basis_24(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(96f32);
 }
 
 /// ```
@@ -3562,8 +4369,37 @@ style.margin.bottom = Val::Px(96f32);
 pub fn my_24(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(96f32);
-        style.margin.bottom = Val::Px(96f32);
+style.margin.top = Val::Px(96f32);
+style.margin.bottom = Val::Px(96f32);
+}
+
+/// ```
+///
+/// Val::Px(96f32)
+/// ```
+pub fn gap_y_24(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(96f32);
+}
+
+/// ```
+///
+/// Val::Px(96f32)
+/// ```
+pub fn gap_x_24(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(96f32);
+}
+
+/// ```
+///
+/// Val::Px(96f32)
+/// ```
+pub fn gap_24(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(96f32);
+style.row_gap = Val::Px(96f32);
 }
 
 /// ```
@@ -3592,6 +4428,15 @@ pub fn size_28(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(112f32);
 style.height = Val::Px(112f32);
+}
+
+/// ```
+///
+/// Val::Px(112f32)
+/// ```
+pub fn basis_28(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(112f32);
 }
 
 /// ```
@@ -3724,8 +4569,37 @@ style.margin.bottom = Val::Px(112f32);
 pub fn my_28(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(112f32);
-        style.margin.bottom = Val::Px(112f32);
+style.margin.top = Val::Px(112f32);
+style.margin.bottom = Val::Px(112f32);
+}
+
+/// ```
+///
+/// Val::Px(112f32)
+/// ```
+pub fn gap_y_28(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(112f32);
+}
+
+/// ```
+///
+/// Val::Px(112f32)
+/// ```
+pub fn gap_x_28(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(112f32);
+}
+
+/// ```
+///
+/// Val::Px(112f32)
+/// ```
+pub fn gap_28(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(112f32);
+style.row_gap = Val::Px(112f32);
 }
 
 /// ```
@@ -3754,6 +4628,15 @@ pub fn size_32(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(128f32);
 style.height = Val::Px(128f32);
+}
+
+/// ```
+///
+/// Val::Px(128f32)
+/// ```
+pub fn basis_32(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(128f32);
 }
 
 /// ```
@@ -3886,8 +4769,37 @@ style.margin.bottom = Val::Px(128f32);
 pub fn my_32(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(128f32);
-        style.margin.bottom = Val::Px(128f32);
+style.margin.top = Val::Px(128f32);
+style.margin.bottom = Val::Px(128f32);
+}
+
+/// ```
+///
+/// Val::Px(128f32)
+/// ```
+pub fn gap_y_32(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(128f32);
+}
+
+/// ```
+///
+/// Val::Px(128f32)
+/// ```
+pub fn gap_x_32(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(128f32);
+}
+
+/// ```
+///
+/// Val::Px(128f32)
+/// ```
+pub fn gap_32(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(128f32);
+style.row_gap = Val::Px(128f32);
 }
 
 /// ```
@@ -3916,6 +4828,15 @@ pub fn size_36(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(144f32);
 style.height = Val::Px(144f32);
+}
+
+/// ```
+///
+/// Val::Px(144f32)
+/// ```
+pub fn basis_36(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(144f32);
 }
 
 /// ```
@@ -4048,8 +4969,37 @@ style.margin.bottom = Val::Px(144f32);
 pub fn my_36(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(144f32);
-        style.margin.bottom = Val::Px(144f32);
+style.margin.top = Val::Px(144f32);
+style.margin.bottom = Val::Px(144f32);
+}
+
+/// ```
+///
+/// Val::Px(144f32)
+/// ```
+pub fn gap_y_36(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(144f32);
+}
+
+/// ```
+///
+/// Val::Px(144f32)
+/// ```
+pub fn gap_x_36(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(144f32);
+}
+
+/// ```
+///
+/// Val::Px(144f32)
+/// ```
+pub fn gap_36(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(144f32);
+style.row_gap = Val::Px(144f32);
 }
 
 /// ```
@@ -4078,6 +5028,15 @@ pub fn size_40(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(160f32);
 style.height = Val::Px(160f32);
+}
+
+/// ```
+///
+/// Val::Px(160f32)
+/// ```
+pub fn basis_40(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(160f32);
 }
 
 /// ```
@@ -4210,8 +5169,37 @@ style.margin.bottom = Val::Px(160f32);
 pub fn my_40(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(160f32);
-        style.margin.bottom = Val::Px(160f32);
+style.margin.top = Val::Px(160f32);
+style.margin.bottom = Val::Px(160f32);
+}
+
+/// ```
+///
+/// Val::Px(160f32)
+/// ```
+pub fn gap_y_40(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(160f32);
+}
+
+/// ```
+///
+/// Val::Px(160f32)
+/// ```
+pub fn gap_x_40(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(160f32);
+}
+
+/// ```
+///
+/// Val::Px(160f32)
+/// ```
+pub fn gap_40(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(160f32);
+style.row_gap = Val::Px(160f32);
 }
 
 /// ```
@@ -4240,6 +5228,15 @@ pub fn size_44(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(176f32);
 style.height = Val::Px(176f32);
+}
+
+/// ```
+///
+/// Val::Px(176f32)
+/// ```
+pub fn basis_44(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(176f32);
 }
 
 /// ```
@@ -4372,8 +5369,37 @@ style.margin.bottom = Val::Px(176f32);
 pub fn my_44(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(176f32);
-        style.margin.bottom = Val::Px(176f32);
+style.margin.top = Val::Px(176f32);
+style.margin.bottom = Val::Px(176f32);
+}
+
+/// ```
+///
+/// Val::Px(176f32)
+/// ```
+pub fn gap_y_44(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(176f32);
+}
+
+/// ```
+///
+/// Val::Px(176f32)
+/// ```
+pub fn gap_x_44(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(176f32);
+}
+
+/// ```
+///
+/// Val::Px(176f32)
+/// ```
+pub fn gap_44(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(176f32);
+style.row_gap = Val::Px(176f32);
 }
 
 /// ```
@@ -4402,6 +5428,15 @@ pub fn size_48(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(192f32);
 style.height = Val::Px(192f32);
+}
+
+/// ```
+///
+/// Val::Px(192f32)
+/// ```
+pub fn basis_48(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(192f32);
 }
 
 /// ```
@@ -4534,8 +5569,37 @@ style.margin.bottom = Val::Px(192f32);
 pub fn my_48(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(192f32);
-        style.margin.bottom = Val::Px(192f32);
+style.margin.top = Val::Px(192f32);
+style.margin.bottom = Val::Px(192f32);
+}
+
+/// ```
+///
+/// Val::Px(192f32)
+/// ```
+pub fn gap_y_48(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(192f32);
+}
+
+/// ```
+///
+/// Val::Px(192f32)
+/// ```
+pub fn gap_x_48(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(192f32);
+}
+
+/// ```
+///
+/// Val::Px(192f32)
+/// ```
+pub fn gap_48(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(192f32);
+style.row_gap = Val::Px(192f32);
 }
 
 /// ```
@@ -4564,6 +5628,15 @@ pub fn size_52(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(208f32);
 style.height = Val::Px(208f32);
+}
+
+/// ```
+///
+/// Val::Px(208f32)
+/// ```
+pub fn basis_52(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(208f32);
 }
 
 /// ```
@@ -4696,8 +5769,37 @@ style.margin.bottom = Val::Px(208f32);
 pub fn my_52(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(208f32);
-        style.margin.bottom = Val::Px(208f32);
+style.margin.top = Val::Px(208f32);
+style.margin.bottom = Val::Px(208f32);
+}
+
+/// ```
+///
+/// Val::Px(208f32)
+/// ```
+pub fn gap_y_52(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(208f32);
+}
+
+/// ```
+///
+/// Val::Px(208f32)
+/// ```
+pub fn gap_x_52(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(208f32);
+}
+
+/// ```
+///
+/// Val::Px(208f32)
+/// ```
+pub fn gap_52(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(208f32);
+style.row_gap = Val::Px(208f32);
 }
 
 /// ```
@@ -4726,6 +5828,15 @@ pub fn size_56(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(224f32);
 style.height = Val::Px(224f32);
+}
+
+/// ```
+///
+/// Val::Px(224f32)
+/// ```
+pub fn basis_56(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(224f32);
 }
 
 /// ```
@@ -4858,8 +5969,37 @@ style.margin.bottom = Val::Px(224f32);
 pub fn my_56(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(224f32);
-        style.margin.bottom = Val::Px(224f32);
+style.margin.top = Val::Px(224f32);
+style.margin.bottom = Val::Px(224f32);
+}
+
+/// ```
+///
+/// Val::Px(224f32)
+/// ```
+pub fn gap_y_56(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(224f32);
+}
+
+/// ```
+///
+/// Val::Px(224f32)
+/// ```
+pub fn gap_x_56(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(224f32);
+}
+
+/// ```
+///
+/// Val::Px(224f32)
+/// ```
+pub fn gap_56(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(224f32);
+style.row_gap = Val::Px(224f32);
 }
 
 /// ```
@@ -4888,6 +6028,15 @@ pub fn size_60(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(240f32);
 style.height = Val::Px(240f32);
+}
+
+/// ```
+///
+/// Val::Px(240f32)
+/// ```
+pub fn basis_60(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(240f32);
 }
 
 /// ```
@@ -5020,8 +6169,37 @@ style.margin.bottom = Val::Px(240f32);
 pub fn my_60(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(240f32);
-        style.margin.bottom = Val::Px(240f32);
+style.margin.top = Val::Px(240f32);
+style.margin.bottom = Val::Px(240f32);
+}
+
+/// ```
+///
+/// Val::Px(240f32)
+/// ```
+pub fn gap_y_60(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(240f32);
+}
+
+/// ```
+///
+/// Val::Px(240f32)
+/// ```
+pub fn gap_x_60(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(240f32);
+}
+
+/// ```
+///
+/// Val::Px(240f32)
+/// ```
+pub fn gap_60(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(240f32);
+style.row_gap = Val::Px(240f32);
 }
 
 /// ```
@@ -5050,6 +6228,15 @@ pub fn size_64(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(256f32);
 style.height = Val::Px(256f32);
+}
+
+/// ```
+///
+/// Val::Px(256f32)
+/// ```
+pub fn basis_64(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(256f32);
 }
 
 /// ```
@@ -5182,8 +6369,37 @@ style.margin.bottom = Val::Px(256f32);
 pub fn my_64(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(256f32);
-        style.margin.bottom = Val::Px(256f32);
+style.margin.top = Val::Px(256f32);
+style.margin.bottom = Val::Px(256f32);
+}
+
+/// ```
+///
+/// Val::Px(256f32)
+/// ```
+pub fn gap_y_64(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(256f32);
+}
+
+/// ```
+///
+/// Val::Px(256f32)
+/// ```
+pub fn gap_x_64(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(256f32);
+}
+
+/// ```
+///
+/// Val::Px(256f32)
+/// ```
+pub fn gap_64(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(256f32);
+style.row_gap = Val::Px(256f32);
 }
 
 /// ```
@@ -5212,6 +6428,15 @@ pub fn size_72(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(288f32);
 style.height = Val::Px(288f32);
+}
+
+/// ```
+///
+/// Val::Px(288f32)
+/// ```
+pub fn basis_72(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(288f32);
 }
 
 /// ```
@@ -5344,8 +6569,37 @@ style.margin.bottom = Val::Px(288f32);
 pub fn my_72(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(288f32);
-        style.margin.bottom = Val::Px(288f32);
+style.margin.top = Val::Px(288f32);
+style.margin.bottom = Val::Px(288f32);
+}
+
+/// ```
+///
+/// Val::Px(288f32)
+/// ```
+pub fn gap_y_72(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(288f32);
+}
+
+/// ```
+///
+/// Val::Px(288f32)
+/// ```
+pub fn gap_x_72(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(288f32);
+}
+
+/// ```
+///
+/// Val::Px(288f32)
+/// ```
+pub fn gap_72(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(288f32);
+style.row_gap = Val::Px(288f32);
 }
 
 /// ```
@@ -5374,6 +6628,15 @@ pub fn size_80(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(320f32);
 style.height = Val::Px(320f32);
+}
+
+/// ```
+///
+/// Val::Px(320f32)
+/// ```
+pub fn basis_80(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(320f32);
 }
 
 /// ```
@@ -5506,8 +6769,37 @@ style.margin.bottom = Val::Px(320f32);
 pub fn my_80(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(320f32);
-        style.margin.bottom = Val::Px(320f32);
+style.margin.top = Val::Px(320f32);
+style.margin.bottom = Val::Px(320f32);
+}
+
+/// ```
+///
+/// Val::Px(320f32)
+/// ```
+pub fn gap_y_80(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(320f32);
+}
+
+/// ```
+///
+/// Val::Px(320f32)
+/// ```
+pub fn gap_x_80(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(320f32);
+}
+
+/// ```
+///
+/// Val::Px(320f32)
+/// ```
+pub fn gap_80(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(320f32);
+style.row_gap = Val::Px(320f32);
 }
 
 /// ```
@@ -5536,6 +6828,15 @@ pub fn size_96(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Px(384f32);
 style.height = Val::Px(384f32);
+}
+
+/// ```
+///
+/// Val::Px(384f32)
+/// ```
+pub fn basis_96(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Px(384f32);
 }
 
 /// ```
@@ -5668,8 +6969,37 @@ style.margin.bottom = Val::Px(384f32);
 pub fn my_96(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     
-        style.margin.top = Val::Px(384f32);
-        style.margin.bottom = Val::Px(384f32);
+style.margin.top = Val::Px(384f32);
+style.margin.bottom = Val::Px(384f32);
+}
+
+/// ```
+///
+/// Val::Px(384f32)
+/// ```
+pub fn gap_y_96(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Px(384f32);
+}
+
+/// ```
+///
+/// Val::Px(384f32)
+/// ```
+pub fn gap_x_96(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Px(384f32);
+}
+
+/// ```
+///
+/// Val::Px(384f32)
+/// ```
+pub fn gap_96(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Px(384f32);
+style.row_gap = Val::Px(384f32);
 }
 
 /// ```
@@ -5702,6 +7032,178 @@ style.height = Val::Auto;
 
 /// ```
 ///
+/// Val::Auto
+/// ```
+pub fn basis_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn p_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.padding = UiRect::all(Val::Auto);
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn pt_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.padding.top = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn pb_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.padding.bottom = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn pl_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.padding.left = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn pr_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.padding.right = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn px_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.padding.top = Val::Auto;
+style.padding.bottom = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn py_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+        style.padding.top = Val::Auto;
+        style.padding.bottom = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn m_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.margin = UiRect::all(Val::Auto);
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn mt_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.margin.top = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn mb_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.margin.bottom = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn ml_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.margin.left = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn mr_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.margin.right = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn mx_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.margin.top = Val::Auto;
+style.margin.bottom = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn my_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.margin.top = Val::Auto;
+style.margin.bottom = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn gap_y_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.column_gap = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn gap_x_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.row_gap = Val::Auto;
+}
+
+/// ```
+///
+/// Val::Auto
+/// ```
+pub fn gap_auto(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    
+style.column_gap = Val::Auto;
+style.row_gap = Val::Auto;
+}
+
+/// ```
+///
 /// Val::Percent(50f32)
 /// ```
 pub fn w_1d2(bundle: &mut impl HasStyle) {
@@ -5726,6 +7228,15 @@ pub fn size_1d2(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(50f32);
 style.height = Val::Percent(50f32);
+}
+
+/// ```
+///
+/// Val::Percent(50f32)
+/// ```
+pub fn basis_1d2(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(50f32);
 }
 
 /// ```
@@ -5758,6 +7269,15 @@ style.height = Val::Percent(33.333332f32);
 
 /// ```
 ///
+/// Val::Percent(33.333332f32)
+/// ```
+pub fn basis_1d3(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(33.333332f32);
+}
+
+/// ```
+///
 /// Val::Percent(66.666664f32)
 /// ```
 pub fn w_2d3(bundle: &mut impl HasStyle) {
@@ -5782,6 +7302,15 @@ pub fn size_2d3(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(66.666664f32);
 style.height = Val::Percent(66.666664f32);
+}
+
+/// ```
+///
+/// Val::Percent(66.666664f32)
+/// ```
+pub fn basis_2d3(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(66.666664f32);
 }
 
 /// ```
@@ -5814,6 +7343,15 @@ style.height = Val::Percent(25f32);
 
 /// ```
 ///
+/// Val::Percent(25f32)
+/// ```
+pub fn basis_1d4(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(25f32);
+}
+
+/// ```
+///
 /// Val::Percent(50f32)
 /// ```
 pub fn w_2d4(bundle: &mut impl HasStyle) {
@@ -5838,6 +7376,15 @@ pub fn size_2d4(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(50f32);
 style.height = Val::Percent(50f32);
+}
+
+/// ```
+///
+/// Val::Percent(50f32)
+/// ```
+pub fn basis_2d4(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(50f32);
 }
 
 /// ```
@@ -5870,6 +7417,15 @@ style.height = Val::Percent(75f32);
 
 /// ```
 ///
+/// Val::Percent(75f32)
+/// ```
+pub fn basis_3d4(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(75f32);
+}
+
+/// ```
+///
 /// Val::Percent(20f32)
 /// ```
 pub fn w_1d5(bundle: &mut impl HasStyle) {
@@ -5894,6 +7450,15 @@ pub fn size_1d5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(20f32);
 style.height = Val::Percent(20f32);
+}
+
+/// ```
+///
+/// Val::Percent(20f32)
+/// ```
+pub fn basis_1d5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(20f32);
 }
 
 /// ```
@@ -5926,6 +7491,15 @@ style.height = Val::Percent(40f32);
 
 /// ```
 ///
+/// Val::Percent(40f32)
+/// ```
+pub fn basis_2d5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(40f32);
+}
+
+/// ```
+///
 /// Val::Percent(60f32)
 /// ```
 pub fn w_3d5(bundle: &mut impl HasStyle) {
@@ -5950,6 +7524,15 @@ pub fn size_3d5(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(60f32);
 style.height = Val::Percent(60f32);
+}
+
+/// ```
+///
+/// Val::Percent(60f32)
+/// ```
+pub fn basis_3d5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(60f32);
 }
 
 /// ```
@@ -5982,6 +7565,15 @@ style.height = Val::Percent(80f32);
 
 /// ```
 ///
+/// Val::Percent(80f32)
+/// ```
+pub fn basis_4d5(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(80f32);
+}
+
+/// ```
+///
 /// Val::Percent(16.666668f32)
 /// ```
 pub fn w_1d6(bundle: &mut impl HasStyle) {
@@ -6006,6 +7598,15 @@ pub fn size_1d6(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(16.666668f32);
 style.height = Val::Percent(16.666668f32);
+}
+
+/// ```
+///
+/// Val::Percent(16.666668f32)
+/// ```
+pub fn basis_1d6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(16.666668f32);
 }
 
 /// ```
@@ -6038,6 +7639,15 @@ style.height = Val::Percent(33.333332f32);
 
 /// ```
 ///
+/// Val::Percent(33.333332f32)
+/// ```
+pub fn basis_2d6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(33.333332f32);
+}
+
+/// ```
+///
 /// Val::Percent(50f32)
 /// ```
 pub fn w_3d6(bundle: &mut impl HasStyle) {
@@ -6062,6 +7672,15 @@ pub fn size_3d6(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(50f32);
 style.height = Val::Percent(50f32);
+}
+
+/// ```
+///
+/// Val::Percent(50f32)
+/// ```
+pub fn basis_3d6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(50f32);
 }
 
 /// ```
@@ -6094,6 +7713,15 @@ style.height = Val::Percent(66.666664f32);
 
 /// ```
 ///
+/// Val::Percent(66.666664f32)
+/// ```
+pub fn basis_4d6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(66.666664f32);
+}
+
+/// ```
+///
 /// Val::Percent(83.333336f32)
 /// ```
 pub fn w_5d6(bundle: &mut impl HasStyle) {
@@ -6118,6 +7746,15 @@ pub fn size_5d6(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(83.333336f32);
 style.height = Val::Percent(83.333336f32);
+}
+
+/// ```
+///
+/// Val::Percent(83.333336f32)
+/// ```
+pub fn basis_5d6(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(83.333336f32);
 }
 
 /// ```
@@ -6150,6 +7787,15 @@ style.height = Val::Percent(8.333333f32);
 
 /// ```
 ///
+/// Val::Percent(8.333333f32)
+/// ```
+pub fn basis_1d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(8.333333f32);
+}
+
+/// ```
+///
 /// Val::Percent(16.666668f32)
 /// ```
 pub fn w_2d12(bundle: &mut impl HasStyle) {
@@ -6174,6 +7820,15 @@ pub fn size_2d12(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(16.666668f32);
 style.height = Val::Percent(16.666668f32);
+}
+
+/// ```
+///
+/// Val::Percent(16.666668f32)
+/// ```
+pub fn basis_2d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(16.666668f32);
 }
 
 /// ```
@@ -6206,6 +7861,15 @@ style.height = Val::Percent(25f32);
 
 /// ```
 ///
+/// Val::Percent(25f32)
+/// ```
+pub fn basis_3d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(25f32);
+}
+
+/// ```
+///
 /// Val::Percent(33.333332f32)
 /// ```
 pub fn w_4d12(bundle: &mut impl HasStyle) {
@@ -6230,6 +7894,15 @@ pub fn size_4d12(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(33.333332f32);
 style.height = Val::Percent(33.333332f32);
+}
+
+/// ```
+///
+/// Val::Percent(33.333332f32)
+/// ```
+pub fn basis_4d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(33.333332f32);
 }
 
 /// ```
@@ -6262,6 +7935,15 @@ style.height = Val::Percent(41.666668f32);
 
 /// ```
 ///
+/// Val::Percent(41.666668f32)
+/// ```
+pub fn basis_5d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(41.666668f32);
+}
+
+/// ```
+///
 /// Val::Percent(50f32)
 /// ```
 pub fn w_6d12(bundle: &mut impl HasStyle) {
@@ -6286,6 +7968,15 @@ pub fn size_6d12(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(50f32);
 style.height = Val::Percent(50f32);
+}
+
+/// ```
+///
+/// Val::Percent(50f32)
+/// ```
+pub fn basis_6d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(50f32);
 }
 
 /// ```
@@ -6318,6 +8009,15 @@ style.height = Val::Percent(58.333332f32);
 
 /// ```
 ///
+/// Val::Percent(58.333332f32)
+/// ```
+pub fn basis_7d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(58.333332f32);
+}
+
+/// ```
+///
 /// Val::Percent(66.666664f32)
 /// ```
 pub fn w_8d12(bundle: &mut impl HasStyle) {
@@ -6342,6 +8042,15 @@ pub fn size_8d12(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(66.666664f32);
 style.height = Val::Percent(66.666664f32);
+}
+
+/// ```
+///
+/// Val::Percent(66.666664f32)
+/// ```
+pub fn basis_8d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(66.666664f32);
 }
 
 /// ```
@@ -6374,6 +8083,15 @@ style.height = Val::Percent(75f32);
 
 /// ```
 ///
+/// Val::Percent(75f32)
+/// ```
+pub fn basis_9d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(75f32);
+}
+
+/// ```
+///
 /// Val::Percent(83.333336f32)
 /// ```
 pub fn w_10d12(bundle: &mut impl HasStyle) {
@@ -6398,6 +8116,15 @@ pub fn size_10d12(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(83.333336f32);
 style.height = Val::Percent(83.333336f32);
+}
+
+/// ```
+///
+/// Val::Percent(83.333336f32)
+/// ```
+pub fn basis_10d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(83.333336f32);
 }
 
 /// ```
@@ -6430,6 +8157,15 @@ style.height = Val::Percent(91.666664f32);
 
 /// ```
 ///
+/// Val::Percent(91.666664f32)
+/// ```
+pub fn basis_11d12(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(91.666664f32);
+}
+
+/// ```
+///
 /// Val::Percent(100f32)
 /// ```
 pub fn w_full(bundle: &mut impl HasStyle) {
@@ -6454,4 +8190,13 @@ pub fn size_full(bundle: &mut impl HasStyle) {
     let style = bundle.style();
     style.width = Val::Percent(100f32);
 style.height = Val::Percent(100f32);
+}
+
+/// ```
+///
+/// Val::Percent(100f32)
+/// ```
+pub fn basis_full(bundle: &mut impl HasStyle) {
+    let style = bundle.style();
+    style.flex_basis = Val::Percent(100f32);
 }
