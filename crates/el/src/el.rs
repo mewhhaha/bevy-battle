@@ -18,6 +18,19 @@ macro_rules! el {
     ($element:ident::<$($classes:tt),*>$(($($args:expr),*))?  $(, [$($children:expr),*])?) => {
         el!(@build, (), $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
     };
+    ($element:ident::<'slot + $($classes:tt),*>$(($($args:expr),*))?, $slot:expr) => {
+        {
+            let el = $element(cn!($($classes),*), $slot$(, $($args),*)?);
+            el!(@build, el)
+        }
+
+    };
+    ($element:ident::<'slot>$(($($args:expr),*))?, $slot:expr) => {
+        {
+            let el = $element(cn!(), $slot$(, $($args),*)?);
+            el!(@build, el)
+        }
+    };
     (@build, $bundle:expr, $element:expr, [$($child:expr),*]) => {
         |p: &mut bevy::prelude::ChildBuilder| {
             p.spawn(($element, $bundle)).with_children(el!(@children, $($child),*));
@@ -28,8 +41,17 @@ macro_rules! el {
             p.spawn(($element, $bundle));
         }
     };
+    (@build, $element:ident) => {
+        |p: &mut bevy::prelude::ChildBuilder| {
+            $element(p);
+        }
+    };
     ($($child:expr),*) => {
-        el!(@children, $($child),*)
+        |p: &mut bevy::prelude::ChildBuilder| {
+            $(
+                $child(p);
+            )*
+        }
     };
     (@children, $($child:expr),*) => {
         |p: &mut bevy::prelude::ChildBuilder| {
@@ -42,9 +64,6 @@ macro_rules! el {
 
 #[macro_export]
 macro_rules! cn {
-    () => {
-        cn!([])
-    };
     [$($name:expr),*] => {
         |mut _bundle| {$(
             $name(&mut _bundle)

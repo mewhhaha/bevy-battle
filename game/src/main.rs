@@ -98,18 +98,29 @@ fn startup_add_people(
         el!(Id(1), button::<bg_white>, [menu_text(t)])
     }
 
+    fn background(image: &Handle<Image>) -> impl FnOnce(&mut ChildBuilder) + '_ {
+        el!(img::<absolute, inset_0>(image.clone()))
+    }
+
+    fn footer(
+        class: impl FnOnce(&mut NodeBundle),
+        slot: impl FnOnce(&mut ChildBuilder),
+    ) -> impl FnOnce(&mut ChildBuilder) {
+        el!(div::<w_full, flex, h_96, class>, [slot])
+    }
+
     commands.spawn(root).with_children(el![
-        el!(img::<absolute, inset_0>(image.clone())),
+        background(&image),
         el!(
-            div::<w_full, h_96>,
-            [el!(
+            footer::<'slot>,
+            el!(
                 div::<flex, flex_col, h_full, w_64>,
                 [
                     menu_button(MenuAction::Attack),
                     menu_button(MenuAction::Items),
                     menu_button(MenuAction::Defend)
                 ]
-            )]
+            )
         )
     ]);
 }
