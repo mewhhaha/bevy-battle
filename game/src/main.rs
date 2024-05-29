@@ -34,6 +34,19 @@ enum RunningState {
     Paused,
 }
 
+#[derive(Resource, Default)]
+struct ActiveElement(Option<Entity>);
+
+#[derive(Event)]
+struct OnClick(Entity);
+
+#[derive(Component)]
+struct Focus;
+
+#[derive(Component)]
+struct Disabled;
+
+#[derive(Component, Clone, Debug)]
 enum MenuAction {
     Attack,
     Items,
@@ -95,7 +108,7 @@ fn startup_add_people(
 
     fn menu_button(t: MenuAction) -> impl FnOnce(&mut ChildBuilder) {
         el!(
-            Id(1),
+            t.clone(),
             button::<bg_white, flex, justify_center>,
             [menu_text(t)]
         )
@@ -207,10 +220,72 @@ fn base_plugins() -> PluginGroupBuilder {
         .set(ImagePlugin::default_nearest())
 }
 
+fn on_click(
+    mut commands: Commands,
+    query: Query<(Entity, &Interaction)>,
+    mouse: Res<ButtonInput<MouseButton>>,
+    keyboard: Res<ButtonInput<KeyCode>>,
+    mut active_element: ResMut<ActiveElement>,
+    mut on_click: EventWriter<OnClick>,
+) {
+    let mut clicked = None;
+    for (entity, interaction) in query.iter() {
+        match (interaction, mouse.just_pressed(MouseButton::Left)) {
+            (Interaction::Pressed, true) => {
+                clicked = Some(entity);
+                break;
+            }
+            _ => {}
+        }
+    }
+
+    match (
+        active_element.0,
+        keyboard.just_pressed(KeyCode::Space) || keyboard.just_pressed(KeyCode::Enter),
+    ) {
+        (Some(prev), true) => {
+            clicked = Some(prev);
+        }
+        _ => {}
+    }
+
+    if let Some(next) = clicked {
+        let changed_focus = active_element.0 != Some(next);
+        on_click.send(OnClick(next));
+
+        if changed_focus {
+            if let Some(prev) = active_element.0 {
+                commands.entity(prev).remove::<Focus>();
+            }
+
+            active_element.0 = Some(next);
+            commands.entity(next).insert(Focus);
+        }
+    }
+}
+
+fn on_menu_action_click(query: Query<&MenuAction>, mut on_click: EventReader<OnClick>) {
+    for OnClick(entity) in on_click.read() {
+        match query.get(*entity).unwrap() {
+            MenuAction::Attack => {
+                println!("Attack");
+            }
+            MenuAction::Items => {
+                println!("Items");
+            }
+            MenuAction::Defend => {
+                println!("Defend");
+            }
+        }
+    }
+}
+
 fn main() {
     App::new()
         .add_plugins(base_plugins())
         .add_plugins(Material2dPlugin::<OutlineMaterial>::default())
+        .insert_resource(ActiveElement::default())
+        .add_event::<OnClick>()
         .insert_state(AppState::Overworld)
         .insert_state(RunningState::Running)
         .add_systems(
@@ -221,6 +296,7 @@ fn main() {
             PreUpdate,
             (
                 sort_y,
+                on_click,
                 player_set_closest_interactive,
                 set_interactive_render_layer,
                 animation_change_frame,
@@ -231,6 +307,9 @@ fn main() {
             (player_set_closest_interactive, set_interactive_render_layer)
                 .run_if(in_state(AppState::Overworld)),
         )
-        .add_systems(Update, (input_read, player_move).chain())
+        .add_systems(
+            Update,
+            (input_read, on_menu_action_click, player_move).chain(),
+        )
         .run();
 }

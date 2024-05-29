@@ -19,29 +19,29 @@ macro_rules! el {
         el!(@build, (), $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
     };
     (@build, $bundle:expr, $element:expr, [$($child:expr),*]) => {
-        |p: &mut bevy::prelude::ChildBuilder| {
+        move |p: &mut bevy::prelude::ChildBuilder| {
             p.spawn(($element, $bundle)).with_children(el!(@children, $($child),*));
         }
     };
     (@build, $bundle:expr, $element:expr) => {
-        |p: &mut bevy::prelude::ChildBuilder| {
+        move |p: &mut bevy::prelude::ChildBuilder| {
             p.spawn(($element, $bundle));
         }
     };
     (@build, $element:ident) => {
-        |p: &mut bevy::prelude::ChildBuilder| {
+        move |p: &mut bevy::prelude::ChildBuilder| {
             $element(p);
         }
     };
     ($($child:expr),*) => {
-        |p: &mut bevy::prelude::ChildBuilder| {
+        move |p: &mut bevy::prelude::ChildBuilder| {
             $(
                 $child(p);
             )*
         }
     };
     (@children, $($child:expr),*) => {
-        |p: &mut bevy::prelude::ChildBuilder| {
+        move |p: &mut bevy::prelude::ChildBuilder| {
             $(
                 $child(p);
             )*
