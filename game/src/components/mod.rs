@@ -11,9 +11,6 @@ pub struct Id(pub i64);
 pub struct Interactive(pub bool);
 
 #[derive(Default, Component)]
-pub struct RangeInteraction(pub f32);
-
-#[derive(Default, Component)]
 pub struct Player;
 
 #[derive(Default, Component)]
@@ -41,12 +38,4 @@ pub struct Animation {
     pub looping: bool,
     pub frame_index: usize,
     pub frames: Vec<Frame>,
-}
-
-#[derive(Resource)]
-pub struct KeyMap {
-    pub move_up: KeyCode,
-    pub move_down: KeyCode,
-    pub move_left: KeyCode,
-    pub move_right: KeyCode,
 }
