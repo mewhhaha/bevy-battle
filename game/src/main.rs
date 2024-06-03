@@ -37,14 +37,32 @@ enum RunningState {
 #[derive(Resource, Default)]
 struct ActiveElement(Option<Entity>);
 
+#[derive(Resource, Default)]
+struct OverElement(Option<Entity>);
+
 #[derive(Event)]
 struct OnClick(Entity);
+
+#[derive(Event)]
+struct OnFocus(Entity);
+
+#[derive(Event)]
+struct OnBlur(Entity);
+
+#[derive(Event)]
+struct OnMouseEnter(Entity);
+
+#[derive(Event)]
+struct OnMouseLeave(Entity);
 
 #[derive(Component)]
 struct Focus;
 
 #[derive(Component)]
 struct Disabled;
+
+#[derive(Component)]
+struct Hover;
 
 #[derive(Component, Clone, Debug)]
 enum MenuAction {
@@ -221,46 +239,93 @@ fn base_plugins() -> PluginGroupBuilder {
 }
 
 fn on_click(
-    mut commands: Commands,
-    query: Query<(Entity, &Interaction)>,
+    query: Query<(Entity, &Interaction), Without<Disabled>>,
     mouse: Res<ButtonInput<MouseButton>>,
     keyboard: Res<ButtonInput<KeyCode>>,
     mut active_element: ResMut<ActiveElement>,
     mut on_click: EventWriter<OnClick>,
 ) {
-    let mut clicked = None;
-    for (entity, interaction) in query.iter() {
-        match (interaction, mouse.just_pressed(MouseButton::Left)) {
-            (Interaction::Pressed, true) => {
-                clicked = Some(entity);
-                break;
-            }
-            _ => {}
-        }
-    }
+    let just_pressed =
+        keyboard.just_pressed(KeyCode::Space) || keyboard.just_pressed(KeyCode::Enter);
 
-    match (
-        active_element.0,
-        keyboard.just_pressed(KeyCode::Space) || keyboard.just_pressed(KeyCode::Enter),
-    ) {
-        (Some(prev), true) => {
-            clicked = Some(prev);
-        }
-        _ => {}
-    }
+    let clicked = query
+        .iter()
+        .find_map(|(entity, interaction)| {
+            match (interaction, mouse.just_pressed(MouseButton::Left)) {
+                (Interaction::Pressed, true) => Some(entity),
+                _ => None,
+            }
+        })
+        .or(if just_pressed { active_element.0 } else { None });
 
     if let Some(next) = clicked {
-        let changed_focus = active_element.0 != Some(next);
         on_click.send(OnClick(next));
 
-        if changed_focus {
-            if let Some(prev) = active_element.0 {
-                commands.entity(prev).remove::<Focus>();
-            }
-
+        if active_element.0 != Some(next) {
             active_element.0 = Some(next);
-            commands.entity(next).insert(Focus);
         }
+    }
+}
+
+fn on_hover(
+    query: Query<(Entity, &Interaction), Without<Disabled>>,
+    mut over_element: ResMut<OverElement>,
+) {
+    let hovered = query
+        .iter()
+        .find_map(|(entity, interaction)| match interaction {
+            Interaction::Hovered => Some(entity),
+            _ => None,
+        });
+
+    if let Some(next) = hovered {
+        if over_element.0 != Some(next) {
+            over_element.0 = Some(next);
+        }
+    }
+}
+
+fn on_mousehover_and_mouseout(
+    mut commands: Commands,
+    mut local: Local<OverElement>,
+    focus: Res<OverElement>,
+    mut mouse_enter_events: EventWriter<OnMouseEnter>,
+    mut mouse_leave_events: EventWriter<OnMouseLeave>,
+) {
+    if local.0 != focus.0 {
+        if let Some(prev) = local.0 {
+            commands.entity(prev).remove::<Focus>();
+            mouse_leave_events.send(OnMouseLeave(prev));
+        }
+
+        if let Some(next) = focus.0 {
+            commands.entity(next).insert(Focus);
+            mouse_enter_events.send(OnMouseEnter(next));
+        }
+
+        local.0 = focus.0;
+    }
+}
+
+fn on_focus_and_blur(
+    mut commands: Commands,
+    mut local: Local<ActiveElement>,
+    focus: Res<ActiveElement>,
+    mut focus_events: EventWriter<OnFocus>,
+    mut blur_events: EventWriter<OnBlur>,
+) {
+    if local.0 != focus.0 {
+        if let Some(prev) = local.0 {
+            commands.entity(prev).remove::<Focus>();
+            blur_events.send(OnBlur(prev));
+        }
+
+        if let Some(next) = focus.0 {
+            commands.entity(next).insert(Focus);
+            focus_events.send(OnFocus(next));
+        }
+
+        local.0 = focus.0;
     }
 }
 
@@ -286,6 +351,10 @@ fn main() {
         .add_plugins(Material2dPlugin::<OutlineMaterial>::default())
         .insert_resource(ActiveElement::default())
         .add_event::<OnClick>()
+        .add_event::<OnFocus>()
+        .add_event::<OnBlur>()
+        .add_event::<OnMouseEnter>()
+        .add_event::<OnMouseLeave>()
         .insert_state(AppState::Overworld)
         .insert_state(RunningState::Running)
         .add_systems(
