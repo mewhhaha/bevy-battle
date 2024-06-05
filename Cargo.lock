@@ -3370,13 +3370,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "toml-loader"
-version = "0.1.0"
-dependencies = [
- "bevy",
-]
-
-[[package]]
 name = "toml_datetime"
 version = "0.6.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
