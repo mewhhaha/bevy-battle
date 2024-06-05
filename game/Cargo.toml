@@ -7,12 +7,16 @@ edition = "2021"
 
 [dependencies]
 bevy = { version = "0.13.2", features = [
+    "dynamic_linking",
     "asset_processor",
     "file_watcher",
     "jpeg",
 ] }
+bevy_common_assets = { version = "0.10.0", features = ["toml"] }
 el = { workspace = true }
+serde = "1.0.203"
 stylesheet = { workspace = true }
+toml = "0.8.14"
 
 [profile.dev]
 opt-level = 1

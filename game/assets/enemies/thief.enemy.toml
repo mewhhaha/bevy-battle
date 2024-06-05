@@ -1,0 +1,6 @@
+#:schema ./schema.json
+
+name = "thief"
+hitpoints = 2
+damage = 1
+sprite = "textures/thief.png"

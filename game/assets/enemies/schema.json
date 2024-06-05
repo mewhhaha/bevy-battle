@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the enemy",
+      "type": "string"
+    },
+    "hitpoints": {
+      "description": "The number of hitpoints the enemy has, should be an integer",
+      "type": "integer"
+    },
+    "damage": {
+      "description": "The amount of damage an enemy deals per hit",
+      "type": "integer"
+    },
+    "sprite": {
+      "description": "The sprite to use for the enemy, should be a string that is a path to an image file",
+      "type": "string"
+    }
+  },
+  "required": ["name", "hitpoints", "sprite"]
+}

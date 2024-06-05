@@ -2,14 +2,17 @@ use crate::components::*;
 use crate::helpers::{create_shape, LAYER_WORLD};
 
 use bevy::app::PluginGroupBuilder;
+use bevy::asset::{AssetLoader, LoadContext, LoadedAsset};
 use bevy::render::view::RenderLayers;
 use bevy::sprite::{Material2dPlugin, Mesh2dHandle};
+use bevy::utils::BoxedFuture;
 use bevy::{
     app::{App, Startup, Update},
     asset::{AssetMode, AssetPlugin},
     prelude::*,
 };
 
+use helpers::{AppState, RunningState};
 use materials::OutlineMaterial;
 use stylesheet::*;
 
@@ -22,19 +25,6 @@ mod ui_events;
 use scenes::battle::*;
 use scenes::overworld::*;
 use ui_events::{OnClick, UiEventsPlugin};
-
-#[derive(States, Debug, Clone, PartialEq, Eq, Hash)]
-enum AppState {
-    MainMenu,
-    Overworld,
-    Fighting,
-}
-
-#[derive(States, Debug, Clone, PartialEq, Eq, Hash)]
-enum RunningState {
-    Running,
-    Paused,
-}
 
 #[derive(Component, Clone, Debug)]
 enum MenuAction {
@@ -110,14 +100,20 @@ fn on_menu_action_click(query: Query<&MenuAction>, mut on_click: EventReader<OnC
     }
 }
 
+const THIEF_ENEMY: &str = "enemies/thief.enemy.toml";
+
 fn change_state_when_interact_enemy(
     query: Query<(&Interactive, &VendingMachine)>,
-    mut state: ResMut<NextState<AppState>>,
+    mut next_state: ResMut<NextState<AppState>>,
     mut on_player_interact: EventReader<OnPlayerInteract>,
+    mut battle: ResMut<BattleQueue>,
 ) {
     for _ in on_player_interact.read() {
-        if (query.iter().len() > 0) && (state.0 == Some(AppState::Overworld)) {
-            state.0 = Some(AppState::Fighting);
+        let any_interact = query.iter().len() > 0;
+        if any_interact {
+            battle.0.clear();
+            battle.0.push(THIEF_ENEMY);
+            next_state.set(AppState::Fighting);
         }
     }
 }
@@ -129,9 +125,9 @@ fn main() {
         .add_plugins(InteractionOutlinePlugin)
         .add_plugins(UiEventsPlugin)
         .add_plugins(PlayerInputPlugin)
+        .add_plugins(BattlePlugin)
         .insert_state(AppState::Overworld)
         .insert_state(RunningState::Running)
-        .add_systems(OnEnter(AppState::Fighting), spawn_battle_screen)
         .add_systems(Startup, (startup_add_people, startup_add_cameras))
         .add_systems(PreUpdate, (sort_y, animation_change_frame))
         .add_systems(

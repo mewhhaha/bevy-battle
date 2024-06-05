@@ -13,9 +13,3 @@ parse-display = "0.9.0"
 [[bin]]
 name = "generate"
 path = "src/generate/main.rs"
-
-[profile.dev]
-opt-level = 1
-
-[profile.dev.package."*"]
-opt-level = 3
