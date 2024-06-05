@@ -1,7 +1,5 @@
-
 use bevy::render::color::Color;
 use el::{HasBackgroundColor, HasText};
-    
 
 /// ```
 ///
