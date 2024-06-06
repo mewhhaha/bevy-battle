@@ -7,7 +7,6 @@ use stylesheet::*;
 use crate::{
     helpers::{wait_for_assets, AppState},
     ui_events::OnClick,
-    MenuAction,
 };
 
 #[derive(States, Debug, Clone, PartialEq, Eq, Hash)]
@@ -48,9 +47,9 @@ pub struct Battle {
 }
 
 enum Action {
-    WantAttack(Entity),
-    Defend(Entity),
-    WantUse(Entity),
+    WantAttack,
+    Defend,
+    WantUse,
 }
 
 #[derive(Resource)]
@@ -83,6 +82,16 @@ pub struct CharacterData {
     portrait: String,
     image: String,
 }
+
+#[derive(Component, Clone, Debug)]
+enum MenuAction {
+    Attack,
+    Items,
+    Defend,
+}
+
+#[derive(Component, Clone, Debug)]
+struct PickEnemy;
 
 fn frame(image: &Handle<Image>) -> impl FnOnce(&mut ChildBuilder) + '_ {
     el!(
@@ -181,8 +190,8 @@ fn init_battle(
         battle.enemy_layout.push(entity.clone());
 
         commands.entity(layout).with_children(el!(
-            Attached(entity),
-            div::<flex, flex_col>,
+            (Attached(entity), PickEnemy),
+            button::<flex, flex_col>,
             [
                 el!(text::<text_black, text_2xl>(name)),
                 el!(text::<text_black, text_2xl>(format!("HP: {}", hitpoints))),
@@ -219,9 +228,17 @@ fn init_battle(
             .entity(layout)
             .with_children(el!(Attached(entity), div::<flex>, [frame(&image)]));
     }
-    println!("Battle: {:?}", battle);
-    commands.insert_resource(battle);
 
+    let turn = Turn {
+        entity: *battle
+            .ally_layout
+            .get(0)
+            .expect("Should have been at least one ally"),
+        action: None,
+    };
+
+    commands.insert_resource(turn);
+    commands.insert_resource(battle);
     // Clean up the load battle scene
     // So there's an error in case we load it twice
     commands.remove_resource::<LoadBattle>();
@@ -233,18 +250,44 @@ fn change_to_battle(In(finished): In<bool>, mut next_state: ResMut<NextState<App
     }
 }
 
-fn on_menu_action_click(query: Query<&MenuAction>, mut on_click: EventReader<OnClick>) {
+fn on_menu_action_click(
+    query: Query<&MenuAction>,
+    mut on_click: EventReader<OnClick>,
+    mut turn: ResMut<Turn>,
+    mut next_state: ResMut<NextState<BattleState>>,
+) {
     for OnClick(entity) in on_click.read() {
-        match query.get(*entity).unwrap() {
-            MenuAction::Attack => {
-                println!("Attack");
+        match query.get(*entity) {
+            Ok(MenuAction::Attack) => {
+                turn.action = Some(Action::WantAttack);
+                next_state.set(BattleState::QueryEnemy);
             }
-            MenuAction::Items => {
+            Ok(MenuAction::Items) => {
                 println!("Items");
             }
-            MenuAction::Defend => {
+            Ok(MenuAction::Defend) => {
                 println!("Defend");
             }
+            _ => {}
+        }
+    }
+}
+
+fn on_pick_enemy(
+    query_button: Query<(Entity, &Attached), With<PickEnemy>>,
+    mut query_enemy: Query<&mut Hitpoints, With<Enemy>>,
+    mut on_click: EventReader<OnClick>,
+    mut turn: ResMut<Turn>,
+    mut next_state: ResMut<NextState<BattleState>>,
+) {
+    for OnClick(entity) in on_click.read() {
+        if let Ok(mut hitpoints) = query_button
+            .get(*entity)
+            .and_then(|(_, Attached(enemy))| query_enemy.get_mut(*enemy))
+        {
+            hitpoints.0 -= 1;
+            turn.action = None;
+            next_state.set(BattleState::PlayerTurn);
         }
     }
 }
@@ -265,15 +308,39 @@ impl Plugin for LoadBattlePlugin {
     }
 }
 
+fn remove_if_dead(
+    mut commands: Commands,
+    query: Query<(Entity, &Hitpoints)>,
+    query_attached: Query<(Entity, &Attached)>,
+) {
+    for (entity, hitpoints) in &query {
+        if hitpoints.0 <= 0 {
+            commands.entity(entity).despawn_recursive();
+            query_attached
+                .iter()
+                .find(|(_, &Attached(attached))| attached == entity)
+                .map(|(e, _)| {
+                    commands.entity(e).despawn_recursive();
+                });
+        }
+    }
+}
+
 pub struct BattlePlugin;
 
 impl Plugin for BattlePlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<OnAttack>()
             .add_plugins(LoadBattlePlugin)
+            .insert_state(BattleState::PlayerTurn)
             .add_systems(
                 Update,
                 on_menu_action_click.run_if(in_state(AppState::Battle)),
+            )
+            .add_systems(Update, remove_if_dead.run_if(in_state(AppState::Battle)))
+            .add_systems(
+                Update,
+                on_pick_enemy.run_if(in_state(BattleState::QueryEnemy)),
             );
     }
 }

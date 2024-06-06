@@ -26,13 +26,6 @@ use scenes::battle::*;
 use scenes::overworld::*;
 use ui_events::{OnClick, UiEventsPlugin};
 
-#[derive(Component, Clone, Debug)]
-enum MenuAction {
-    Attack,
-    Items,
-    Defend,
-}
-
 fn startup_add_people(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,

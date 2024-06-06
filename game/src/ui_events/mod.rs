@@ -86,12 +86,16 @@ fn on_mousehover_and_mouseout(
 ) {
     if local.0 != focus.0 {
         if let Some(prev) = local.0 {
-            commands.entity(prev).remove::<Focus>();
+            commands.get_entity(prev).map(|mut e| {
+                e.remove::<Hover>();
+            });
             mouse_leave_events.send(OnMouseLeave(prev));
         }
 
         if let Some(next) = focus.0 {
-            commands.entity(next).insert(Focus);
+            commands.get_entity(next).map(|mut e| {
+                e.insert(Hover);
+            });
             mouse_enter_events.send(OnMouseEnter(next));
         }
 
@@ -108,12 +112,16 @@ fn on_focus_and_blur(
 ) {
     if local.0 != focus.0 {
         if let Some(prev) = local.0 {
-            commands.entity(prev).remove::<Focus>();
+            commands.get_entity(prev).map(|mut e| {
+                e.remove::<Focus>();
+            });
             blur_events.send(OnBlur(prev));
         }
 
         if let Some(next) = focus.0 {
-            commands.entity(next).insert(Focus);
+            commands.get_entity(next).map(|mut e| {
+                e.insert(Focus);
+            });
             focus_events.send(OnFocus(next));
         }
 
