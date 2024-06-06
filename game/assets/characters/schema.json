@@ -14,10 +14,14 @@
       "description": "The amount of damage an enemy deals per hit",
       "type": "integer"
     },
-    "sprite": {
-      "description": "The sprite to use for the enemy, should be a string that is a path to an image file",
+    "image": {
+      "description": "The sprite to use for the character in the enemy area, should be a string that is a path to an image file",
+      "type": "string"
+    },
+    "portrait": {
+      "description": "The portrait to use for the character in the ally area, should be a string that is a path to an image file",
       "type": "string"
     }
   },
-  "required": ["name", "hitpoints", "sprite"]
+  "required": ["name", "hitpoints", "image", "damage"]
 }

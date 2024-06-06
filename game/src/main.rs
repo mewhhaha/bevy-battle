@@ -12,7 +12,7 @@ use bevy::{
     prelude::*,
 };
 
-use helpers::{AppState, RunningState};
+use helpers::{AppState, AssetsLoading, OnPlayerInteract, PlayerInputPlugin, RunningState};
 use materials::OutlineMaterial;
 use stylesheet::*;
 
@@ -84,37 +84,36 @@ fn base_plugins() -> PluginGroupBuilder {
         .set(ImagePlugin::default_nearest())
 }
 
-fn on_menu_action_click(query: Query<&MenuAction>, mut on_click: EventReader<OnClick>) {
-    for OnClick(entity) in on_click.read() {
-        match query.get(*entity).unwrap() {
-            MenuAction::Attack => {
-                println!("Attack");
-            }
-            MenuAction::Items => {
-                println!("Items");
-            }
-            MenuAction::Defend => {
-                println!("Defend");
-            }
-        }
-    }
-}
-
-const THIEF_ENEMY: &str = "enemies/thief.enemy.toml";
+const THIEF_ENEMY: &str = "characters/thief.char.toml";
+const PLAYER_ALLY: &str = "characters/player.char.toml";
 
 fn change_state_when_interact_enemy(
+    mut commands: Commands,
     query: Query<(&Interactive, &VendingMachine)>,
     mut next_state: ResMut<NextState<AppState>>,
     mut on_player_interact: EventReader<OnPlayerInteract>,
-    mut battle: ResMut<BattleQueue>,
+
+    asset_server: ResMut<AssetServer>,
+    mut assets_loading: ResMut<AssetsLoading>,
 ) {
-    for _ in on_player_interact.read() {
-        let any_interact = query.iter().len() > 0;
-        if any_interact {
-            battle.0.clear();
-            battle.0.push(THIEF_ENEMY);
-            next_state.set(AppState::Fighting);
-        }
+    let any_interactable = query.iter().len() > 0;
+    let any_interaction = on_player_interact.read().len() > 0;
+
+    if any_interactable && any_interaction {
+        let thief_handle = asset_server.load::<CharacterData>(THIEF_ENEMY);
+        let player_handle = asset_server.load::<CharacterData>(PLAYER_ALLY);
+
+        let battle = LoadBattle {
+            enemy_layout: vec![
+                thief_handle.clone(),
+                thief_handle.clone(),
+                thief_handle.clone(),
+            ],
+            ally_layout: vec![player_handle.clone()],
+        };
+        commands.insert_resource(battle);
+        assets_loading.add_all(vec![thief_handle.untyped(), player_handle.untyped()]);
+        next_state.set(AppState::LoadBattle);
     }
 }
 
@@ -126,17 +125,14 @@ fn main() {
         .add_plugins(UiEventsPlugin)
         .add_plugins(PlayerInputPlugin)
         .add_plugins(BattlePlugin)
+        .insert_resource(AssetsLoading::default())
         .insert_state(AppState::Overworld)
         .insert_state(RunningState::Running)
         .add_systems(Startup, (startup_add_people, startup_add_cameras))
         .add_systems(PreUpdate, (sort_y, animation_change_frame))
         .add_systems(
             Update,
-            (
-                on_menu_action_click,
-                player_move,
-                change_state_when_interact_enemy,
-            ),
+            (player_move, change_state_when_interact_enemy).run_if(in_state(AppState::Overworld)),
         )
         .run();
 }

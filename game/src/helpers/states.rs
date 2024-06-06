@@ -4,7 +4,8 @@ use bevy::prelude::*;
 pub enum AppState {
     MainMenu,
     Overworld,
-    Fighting,
+    LoadBattle,
+    Battle,
 }
 
 #[derive(States, Debug, Clone, PartialEq, Eq, Hash)]

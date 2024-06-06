@@ -7,6 +7,7 @@ use bevy::{
     time::Time,
     transform::components::Transform,
 };
+
 pub fn player_move(
     time: Res<Time>,
     mut player_query: Query<(&mut Transform, &Speed, &Velocity), With<Player>>,

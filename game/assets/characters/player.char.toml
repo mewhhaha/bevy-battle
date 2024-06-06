@@ -1,0 +1,7 @@
+#:schema ./schema.json
+
+name = "Tav Wha'said"
+hitpoints = 10
+damage = 1
+portrait = "textures/portrait.png"
+image = "textures/portrait.png"

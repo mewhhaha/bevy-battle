@@ -9,7 +9,8 @@ use bevy::{
 };
 
 #[derive(Resource)]
-pub struct KeyMap {
+
+pub struct InputMap {
     pub move_up: KeyCode,
     pub move_down: KeyCode,
     pub move_left: KeyCode,
@@ -22,8 +23,8 @@ pub struct OnPlayerInteract;
 
 use crate::components::*;
 
-pub fn input_read(
-    keymap: Res<KeyMap>,
+pub fn read_keymap(
+    keymap: Res<InputMap>,
     keyboard_input: Res<ButtonInput<KeyCode>>,
     mut player_query: Query<&mut Velocity, With<Player>>,
     mut on_interact: EventWriter<OnPlayerInteract>,
@@ -58,14 +59,14 @@ pub struct PlayerInputPlugin;
 
 impl Plugin for PlayerInputPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(KeyMap {
+        app.insert_resource(InputMap {
             move_up: KeyCode::KeyW,
             move_down: KeyCode::KeyS,
             move_left: KeyCode::KeyA,
             move_right: KeyCode::KeyD,
             interact: KeyCode::Space,
         })
-        .add_systems(PreUpdate, input_read)
+        .add_systems(PreUpdate, read_keymap)
         .add_event::<OnPlayerInteract>();
     }
 }

@@ -3,4 +3,5 @@
 name = "thief"
 hitpoints = 2
 damage = 1
-sprite = "textures/thief.png"
+portrait = "textures/thief.png"
+image = "textures/thief.png"
