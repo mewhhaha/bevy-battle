@@ -6,7 +6,7 @@ use stylesheet::*;
 
 use crate::{
     helpers::{wait_for_assets, AppState},
-    ui_events::{OnBlur, OnClick, OnFocus, OnMouseEnter, OnMouseLeave},
+    ui_events::{Disabled, OnBlur, OnClick, OnFocus, OnMouseEnter, OnMouseLeave},
 };
 
 #[derive(States, Debug, Clone, PartialEq, Eq, Hash)]
@@ -64,9 +64,6 @@ pub struct EnemyArea;
 #[derive(Component)]
 pub struct AllyArea;
 
-#[derive(Component)]
-pub struct Attached(Entity);
-
 #[derive(Event)]
 pub struct OnAttack {
     pub attacker: Entity,
@@ -92,6 +89,12 @@ enum MenuAction {
 
 #[derive(Component, Clone, Debug)]
 struct PickEnemy;
+
+#[derive(Component)]
+struct UiEnemy {
+    hp_ref: Option<Entity>,
+    button_ref: Option<Entity>,
+}
 
 fn frame(image: &Handle<Image>) -> impl FnOnce(&mut ChildBuilder) + '_ {
     el!(
@@ -179,25 +182,29 @@ fn init_battle(
 
         let image = asset_server.load(image);
 
+        let mut hp_ref: Option<Entity> = None;
+        let mut button_ref: Option<Entity> = None;
+
+        commands.entity(layout).with_children(el!(
+            (PickEnemy, Disabled),
+            button::<button_ref + flex, flex_col>,
+            [
+                el!(text::<text_black, text_2xl>(name)),
+                el!(text::<text_black, text_2xl>(format!("HP: {}", hitpoints))),
+                el!(img::<hp_ref + w_32, h_32>(image))
+            ]
+        ));
+
+        println!("Enemy: {:?}", hp_ref);
         let entity = commands
             .spawn((
                 Name(name.clone()),
                 Hitpoints(*hitpoints),
                 Damage(*damage),
-                Enemy,
+                UiEnemy { hp_ref, button_ref },
             ))
             .id();
         battle.enemy_layout.push(entity.clone());
-
-        commands.entity(layout).with_children(el!(
-            (Attached(entity), PickEnemy),
-            button::<flex, flex_col>,
-            [
-                el!(text::<text_black, text_2xl>(name)),
-                el!(text::<text_black, text_2xl>(format!("HP: {}", hitpoints))),
-                el!(img::<w_32, h_32>(image))
-            ]
-        ));
     }
 
     let layout = ally_area_query.single();
@@ -226,7 +233,7 @@ fn init_battle(
 
         commands
             .entity(layout)
-            .with_children(el!(Attached(entity), div::<flex>, [frame(&image)]));
+            .with_children(el!(div::<flex>, [frame(&image)]));
     }
 
     let turn = Turn {
@@ -242,6 +249,20 @@ fn init_battle(
     // Clean up the load battle scene
     // So there's an error in case we load it twice
     commands.remove_resource::<LoadBattle>();
+}
+
+fn update_enemy_health(
+    query: Query<(&Hitpoints, &UiEnemy), Changed<Hitpoints>>,
+    mut ui_query: Query<&mut Text>,
+) {
+    for (hitpoints, UiEnemy { hp_ref, .. }) in &query {
+        println!("HP: {}", hitpoints.0);
+        let text_query = hp_ref.and_then(|r| ui_query.get_mut(r).ok());
+        println!("Text query: {:?}", text_query);
+        if let Some(mut text) = text_query {
+            text.sections[0].value = format!("HP: {}", hitpoints.0);
+        }
+    }
 }
 
 fn change_to_battle(In(finished): In<bool>, mut next_state: ResMut<NextState<AppState>>) {
@@ -274,40 +295,65 @@ fn on_menu_action_click(
 }
 
 fn on_pick_enemy(
-    query_button: Query<(Entity, &Attached), With<PickEnemy>>,
-    mut query_enemy: Query<&mut Hitpoints, With<Enemy>>,
+    mut query_enemy: Query<(&mut Hitpoints, &UiEnemy)>,
     mut on_click: EventReader<OnClick>,
     mut turn: ResMut<Turn>,
     mut next_state: ResMut<NextState<BattleState>>,
 ) {
     for OnClick(entity) in on_click.read() {
-        if let Ok(mut hitpoints) = query_button
-            .get(*entity)
-            .and_then(|(_, Attached(enemy))| query_enemy.get_mut(*enemy))
-        {
-            hitpoints.0 -= 1;
-            turn.action = None;
-            next_state.set(BattleState::PlayerTurn);
+        for (mut hitpoints, UiEnemy { button_ref, .. }) in &mut query_enemy {
+            if button_ref == &Some(entity.clone()) {
+                println!("Enemy clicked");
+                hitpoints.0 -= 1;
+                println!("Enemy hitpoints: {}", hitpoints.0);
+                turn.action = None;
+                next_state.set(BattleState::PlayerTurn);
+            }
         }
     }
 }
 
-fn focus_outline(
+fn hover_effect(
+    mut commands: Commands,
+    mut mouse_enter_event: EventReader<OnMouseEnter>,
+    mut mouse_leave_event: EventReader<OnMouseLeave>,
+    mut query_background_color: Query<&mut BackgroundColor>,
+) {
+    for OnMouseEnter(entity) in mouse_enter_event.read() {
+        if let Ok(mut background_color) = query_background_color.get_mut(*entity) {
+            background_color.0 = Color::rgb(0.0, 0.0, 1.0);
+        }
+    }
+
+    for OnMouseLeave(entity) in mouse_leave_event.read() {
+        if let Some(mut entity_commands) = commands.get_entity(*entity) {
+            entity_commands.remove::<Outline>();
+        }
+        if let Ok(mut background_color) = query_background_color.get_mut(*entity) {
+            background_color.0 = Color::rgb(1.0, 1.0, 1.0);
+        }
+    }
+}
+fn focus_effect(
     mut commands: Commands,
     mut focus_event: EventReader<OnFocus>,
     mut blur_event: EventReader<OnBlur>,
 ) {
     for OnFocus(entity) in focus_event.read() {
-        commands.entity(*entity).insert(Outline {
-            width: Val::Px(2.0),
-            offset: Val::Px(4.0),
-            color: Color::rgb(0.0, 0.0, 1.0),
-            ..default()
-        });
+        if let Some(mut entity_commands) = commands.get_entity(*entity) {
+            entity_commands.insert(Outline {
+                width: Val::Px(2.0),
+                offset: Val::Px(4.0),
+                color: Color::rgb(0.0, 0.0, 1.0),
+                ..default()
+            });
+        }
     }
 
     for OnBlur(entity) in blur_event.read() {
-        commands.entity(*entity).remove::<Outline>();
+        if let Some(mut entity_commands) = commands.get_entity(*entity) {
+            entity_commands.remove::<Outline>();
+        }
     }
 }
 
@@ -323,26 +369,37 @@ impl Plugin for LoadBattlePlugin {
             .add_systems(
                 OnEnter(AppState::Battle),
                 (init_battle_screen, init_battle).chain(),
-            )
-            .add_systems(Update, focus_outline.run_if(in_state(AppState::Battle)));
+            );
     }
 }
 
 fn remove_if_dead(
     mut commands: Commands,
-    query: Query<(Entity, &Hitpoints)>,
-    query_attached: Query<(Entity, &Attached)>,
+    query: Query<(&Hitpoints, &UiEnemy), Changed<Hitpoints>>,
 ) {
-    for (entity, hitpoints) in &query {
-        if hitpoints.0 <= 0 {
-            commands.entity(entity).despawn_recursive();
-            query_attached
-                .iter()
-                .find(|(_, &Attached(attached))| attached == entity)
-                .map(|(e, _)| {
-                    commands.entity(e).despawn_recursive();
-                });
+    for (hitpoints, UiEnemy { button_ref, .. }) in &query {
+        let dead = hitpoints.0 <= 0;
+        match (dead, button_ref.and_then(|r| commands.get_entity(r))) {
+            (true, Some(button)) => {
+                button.despawn_recursive();
+            }
+            _ => {}
         }
+    }
+}
+
+fn enable_enemy_buttons(
+    mut commands: Commands,
+    query_button: Query<Entity, (With<PickEnemy>, With<Disabled>)>,
+) {
+    for entity in &query_button {
+        commands.entity(entity).remove::<Disabled>();
+    }
+}
+
+fn disable_enemy_buttons(mut commands: Commands, query_button: Query<Entity, With<PickEnemy>>) {
+    for entity in &query_button {
+        commands.entity(entity).insert(Disabled);
     }
 }
 
@@ -355,12 +412,18 @@ impl Plugin for BattlePlugin {
             .insert_state(BattleState::PlayerTurn)
             .add_systems(
                 Update,
-                on_menu_action_click.run_if(in_state(AppState::Battle)),
+                (on_menu_action_click, remove_if_dead, update_enemy_health)
+                    .run_if(in_state(AppState::Battle)),
             )
-            .add_systems(Update, remove_if_dead.run_if(in_state(AppState::Battle)))
             .add_systems(
                 Update,
                 on_pick_enemy.run_if(in_state(BattleState::QueryEnemy)),
+            )
+            .add_systems(OnEnter(BattleState::QueryEnemy), enable_enemy_buttons)
+            .add_systems(OnExit(BattleState::QueryEnemy), disable_enemy_buttons)
+            .add_systems(
+                Update,
+                (hover_effect, focus_effect).run_if(in_state(AppState::Battle)),
             );
     }
 }

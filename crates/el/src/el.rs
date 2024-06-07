@@ -12,6 +12,13 @@ use bevy::{
 
 #[macro_export]
 macro_rules! el {
+
+    ($bundle:expr, $element:ident::<$ref:ident + $($classes:tt),*>$(($($args:expr),*))?  $(, [$($children:expr),*])?) => {
+        el!(@build_ref, $ref, $bundle, $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
+    };
+    ($element:ident::<$ref:ident + $($classes:tt),*>$(($($args:expr),*))?  $(, [$($children:expr),*])?) => {
+        el!(@build_ref, $ref, (), $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
+    };
     ($bundle:expr, $element:ident::<$($classes:tt),*>$(($($args:expr),*))?  $(, [$($children:expr),*])?) => {
         el!(@build, $bundle, $element(cn!($($classes),*) $(, $($args),*)?) $(, [$($children),*])?)
     };
@@ -31,6 +38,24 @@ macro_rules! el {
     (@build, $element:ident) => {
         move |p: &mut bevy::prelude::ChildBuilder| {
             $element(p);
+        }
+    };
+    (@build_ref, $ref:ident, $bundle:expr, $element:expr, [$($child:expr),*]) => {
+         |p: &mut bevy::prelude::ChildBuilder| {
+            let mut r = &mut $ref;
+            *r = Some(p.spawn(($element, $bundle)).with_children(el!(@children, $($child),*)).id());
+        }
+    };
+    (@build_ref, $ref:ident, $bundle:expr, $element:expr) => {
+        move |p: &mut bevy::prelude::ChildBuilder| {
+            let mut r = &mut $ref;
+            *r = Some(p.spawn(($element, $bundle)).id());
+        }
+    };
+    (@build_ref, $ref:ident, $element:ident) => {
+        move |p: &mut bevy::prelude::ChildBuilder| {
+            let mut r = &mut $ref
+            *r = Some($element(p).id());
         }
     };
     ($($child:expr),*) => {
