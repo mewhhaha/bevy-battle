@@ -6,7 +6,7 @@ use stylesheet::*;
 
 use crate::{
     helpers::{wait_for_assets, AppState},
-    ui_events::OnClick,
+    ui_events::{OnBlur, OnClick, OnFocus, OnMouseEnter, OnMouseLeave},
 };
 
 #[derive(States, Debug, Clone, PartialEq, Eq, Hash)]
@@ -292,6 +292,25 @@ fn on_pick_enemy(
     }
 }
 
+fn focus_outline(
+    mut commands: Commands,
+    mut focus_event: EventReader<OnFocus>,
+    mut blur_event: EventReader<OnBlur>,
+) {
+    for OnFocus(entity) in focus_event.read() {
+        commands.entity(*entity).insert(Outline {
+            width: Val::Px(2.0),
+            offset: Val::Px(4.0),
+            color: Color::rgb(0.0, 0.0, 1.0),
+            ..default()
+        });
+    }
+
+    for OnBlur(entity) in blur_event.read() {
+        commands.entity(*entity).remove::<Outline>();
+    }
+}
+
 pub struct LoadBattlePlugin;
 
 impl Plugin for LoadBattlePlugin {
@@ -304,7 +323,8 @@ impl Plugin for LoadBattlePlugin {
             .add_systems(
                 OnEnter(AppState::Battle),
                 (init_battle_screen, init_battle).chain(),
-            );
+            )
+            .add_systems(Update, focus_outline.run_if(in_state(AppState::Battle)));
     }
 }
 
